@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style type="text/css">
+            .wrap{width: 500px;height:100px;overflow:hidden;margin: 100px auto;position: relative;border: 10px solid #999;}
+            .list{position: absolute;left:0;top:0;width: 1000px;height: 300px;}
+            .list:hover{-webkit-animation-play-state: paused;-moz-animation-play-state: paused;-ms-animation-play-state: paused;animation-play-state: paused;}
+            .list li{float:left;width: 98px;height: 98px;border: 1px solid #000;text-align: center;line-height: 98px;}
+            @-webkit-keyframes move{
+                0%{
+                    left: 0;
+                }
+                100%{
+                    left: -500px;
+                }
+            }
+            @-moz-keyframes move{
+                0%{
+                    left: 0;
+                }
+                100%{
+                    left: -500px;
+                }
+            }
+            @-ms-keyframes move{
+                0%{
+                    left: 0;
+                }
+                100%{
+                    left: -500px;
+                }
+            }
+            @keyframes move{
+                0%{
+                    left: 0;
+                }
+                100%{
+                    left: -500px;
+                }
+            }
+            .scroll{-webkit-animation: move 12s linear 0s infinite;-moz-animation: move 12s linear 0s infinite;-ms-animation: move 12s linear 0s infinite;animation: move 12s linear 0s infinite;left: -500px;}
+        </style>
+    </head>
+    <body>
+        <div class="wrap">
+            <ul class="list scroll" id="list">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+        </div>
+    </body>
+</html>
+
