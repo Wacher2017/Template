@@ -64,11 +64,11 @@
 			toolbarPlacements = ['default', 'top', 'bottom'],
 
 			/********************************************************************************
-             *
-             * Private functions
-             *
-             ********************************************************************************/
-            getMainTemplate = function () {
+       *
+       * Private functions
+       *
+       ********************************************************************************/
+      getMainTemplate = function () {
 				var headTemplate = $('<thead>')
 							.append($('<tr>').append($('<th>').attr('colspan', '5')
 							.append($('<div>').addClass('col-md-1 sys-padding-margin').attr('id','headtext'))
@@ -137,7 +137,7 @@
 			},
 
 			getTemplate = function () {
-               var template = $('<div>').addClass('bootstrap-datetimeperiods-widget dropdown-menu'),
+          var template = $('<div>').addClass('bootstrap-datetimeperiods-widget dropdown-menu'),
 					mainView = $('<div>').addClass('dateperiods').append(getMainTemplate()),
 					content = $('<ul>').addClass('list-unstyled'),
 					toolbar = $('<li>').addClass('periods-switch').append(getToolbar());
@@ -154,96 +154,96 @@
 					content.append(toolbar);
 				}
 				return template.append(content);
-            },
+      },
 
 			dataToOptions = function () {
-                var eData = element.data(),
-                    dataOptions = {};
+          var eData = element.data(),
+              dataOptions = {};
 
-                if (eData.dateOptions && eData.dateOptions instanceof Object) {
-                    dataOptions = $.extend(true, dataOptions, eData.dateOptions);
-                }
+          if (eData.dateOptions && eData.dateOptions instanceof Object) {
+              dataOptions = $.extend(true, dataOptions, eData.dateOptions);
+          }
 
-                $.each(options, function (key) {
-                    var attributeName = 'date' + key.charAt(0).toUpperCase() + key.slice(1);
-                    if (eData[attributeName] !== undefined) {
-                        dataOptions[key] = eData[attributeName];
-                    }
-                });
-                return dataOptions;
-            },
+          $.each(options, function (key) {
+              var attributeName = 'date' + key.charAt(0).toUpperCase() + key.slice(1);
+              if (eData[attributeName] !== undefined) {
+                  dataOptions[key] = eData[attributeName];
+              }
+          });
+          return dataOptions;
+      },
 
 			place = function () {
-                var offset = (component || element).position(),
+          var offset = (component || element).position(),
 					vertical = options.widgetPositioning.vertical,
 					horizontal = options.widgetPositioning.horizontal,
 					parent;
 
-				if (options.widgetParent) {
-					parent = options.widgetParent.append(widget);
-				} else if (element.is('input')) {
-					parent = element.parent().append(widget);
-				} else {
-					parent = element;
-					element.children().first().after(widget);
-				}
+  				if (options.widgetParent) {
+  					parent = options.widgetParent.append(widget);
+  				} else if (element.is('input')) {
+  					parent = element.parent().append(widget);
+  				} else {
+  					parent = element;
+  					element.children().first().after(widget);
+  				}
 
-				// Top and bottom logic
-				if (vertical === 'auto') {
-					if ((component || element).offset().top + widget.height() > $(window).height() + $(window).scrollTop() &&
-							widget.height() + element.outerHeight() < (component || element).offset().top) {
-						vertical = 'top';
-					} else {
-						vertical = 'bottom';
-					}
-				}
+  				// Top and bottom logic
+  				if (vertical === 'auto') {
+  					if ((component || element).offset().top + widget.height() > $(window).height() + $(window).scrollTop() &&
+  							widget.height() + element.outerHeight() < (component || element).offset().top) {
+  						vertical = 'top';
+  					} else {
+  						vertical = 'bottom';
+  					}
+  				}
 
-				// Left and right logic
-				if (horizontal === 'auto') {
-					if (parent.width() < offset.left + widget.outerWidth()) {
-						horizontal = 'right';
-					} else {
-						horizontal = 'left';
-					}
-				}
+  				// Left and right logic
+  				if (horizontal === 'auto') {
+  					if (parent.width() < offset.left + widget.outerWidth()) {
+  						horizontal = 'right';
+  					} else {
+  						horizontal = 'left';
+  					}
+				  }
 
-				if (vertical === 'top') {
-					widget.addClass('top').removeClass('bottom');
-				} else {
-					widget.addClass('bottom').removeClass('top');
-				}
+  				if (vertical === 'top') {
+  					widget.addClass('top').removeClass('bottom');
+  				} else {
+  					widget.addClass('bottom').removeClass('top');
+  				}
 
-				if (horizontal === 'right') {
-					widget.addClass('pull-right');
-				} else {
-					widget.removeClass('pull-right');
-				}
+  				if (horizontal === 'right') {
+  					widget.addClass('pull-right');
+  				} else {
+  					widget.removeClass('pull-right');
+  				}
 
-				// find the first parent element that has a relative css positioning
-				if (parent.css('position') !== 'relative') {
-					parent = parent.parents().filter(function () {
-						return $(this).css('position') === 'relative';
-					}).first();
-				}
+  				// find the first parent element that has a relative css positioning
+  				if (parent.css('position') !== 'relative') {
+  					parent = parent.parents().filter(function () {
+  						return $(this).css('position') === 'relative';
+  					}).first();
+  				}
 
-				if (parent.length === 0) {
-					throw new Error('datetimeperiods component should be placed within a relative positioned container');
-				}
+  				if (parent.length === 0) {
+  					throw new Error('datetimeperiods component should be placed within a relative positioned container');
+				  }
 
-				widget.css({
-					top: vertical === 'top' ? 'auto' : offset.top + element.outerHeight(),
-					bottom: vertical === 'top' ? offset.top + element.outerHeight() : 'auto',
-					left: horizontal === 'left' ? parent.css('padding-left') : 'auto',
-					right: horizontal === 'left' ? 'auto' : parent.css('padding-right')
-				});
-            },
+  				widget.css({
+  					top: vertical === 'top' ? 'auto' : offset.top + element.outerHeight(),
+  					bottom: vertical === 'top' ? offset.top + element.outerHeight() : 'auto',
+  					left: horizontal === 'left' ? parent.css('padding-left') : 'auto',
+  					right: horizontal === 'left' ? 'auto' : parent.css('padding-right')
+  				});
+      },
 
-            notifyEvent = function (e) {
-                if (e.type === 'dp.change') {
-                    return;
-                }
-                element.trigger(e);
-            },
+      notifyEvent = function (e) {
+          if (e.type === 'dp.change') {
+              return;
+          }
+          element.trigger(e);
+      },
 
 			checkAll = function(sel,type){
 				sel.on('click',function(){
@@ -426,7 +426,6 @@
 							break
 					default: break;
 				}
-
 			},
 
 			fillHeader = function(type,text){
@@ -844,58 +843,58 @@
 					type: 'dp.show'
 				});
 				return periods;
-            },
+      },
 
 			toggle = function () {
-                return (widget ? hide() : show());
-            },
+          return (widget ? hide() : show());
+      },
 
 			change = function (e) {
-               var val = $(e.target).val().trim();
+        var val = $(e.target).val().trim();
 				setValue(val);
 				e.stopImmediatePropagation();
 				return false;
-            },
+      },
 
 			keydown = function (e) {
-                if (e.keyCode === 27) { // allow escape to hide periods
-                    hide();
-                }
-            },
+          if (e.keyCode === 27) { // allow escape to hide periods
+              hide();
+          }
+      },
 
 			attachDatePeriodsElementEvents = function () {
-                input.on({
-                    'change': change,
-                    'blur': hide,
-                    'keydown': keydown
-                });
+          input.on({
+              'change': change,
+              'blur': hide,
+              'keydown': keydown
+          });
 
-                if (element.is('input')) {
-                    input.on({
-                        'focus': show
-                    });
-                } else if (component) {
-                    component.on('click', toggle);
-                    component.on('mousedown', false);
-                }
-            },
+          if (element.is('input')) {
+              input.on({
+                  'focus': show
+              });
+          } else if (component) {
+              component.on('click', toggle);
+              component.on('mousedown', false);
+          }
+      },
 
 			detachDatePeriodsElementEvents = function () {
-                input.off({
-                    'change': change,
-                    'blur': hide,
-                    'keydown': keydown
-                });
+          input.off({
+              'change': change,
+              'blur': hide,
+              'keydown': keydown
+          });
 
-                if (element.is('input')) {
-                    input.off({
-                        'focus': show
-                    });
-                } else if (component) {
-                    component.off('click', toggle);
-                    component.off('mousedown', false);
-                }
-            },
+          if (element.is('input')) {
+              input.off({
+                  'focus': show
+              });
+          } else if (component) {
+              component.off('click', toggle);
+              component.off('mousedown', false);
+          }
+      },
 
 			initFormatting = function () {
 				minViewModeNumber = 0;
@@ -913,191 +912,191 @@
          *
          ********************************************************************************/
 		periods.destroy = function () {
-            hide();
-            detachDatePeriodsElementEvents();
-            element.removeData('DateTimePeriods');
-            element.removeData('date');
-        };
+        hide();
+        detachDatePeriodsElementEvents();
+        element.removeData('DateTimePeriods');
+        element.removeData('date');
+    };
 
 		periods.toggle = toggle;
 
-        periods.show = show;
+    periods.show = show;
 
-        periods.hide = hide;
+    periods.hide = hide;
 
 		periods.disable = function () {
-            hide();
-            if (component && component.hasClass('btn')) {
-                component.addClass('disabled');
-            }
-            input.prop('disabled', true);
-            return periods;
-        };
+        hide();
+        if (component && component.hasClass('btn')) {
+            component.addClass('disabled');
+        }
+        input.prop('disabled', true);
+        return periods;
+    };
 
 		periods.defaultDate = function (defaultDate) {
-            if (arguments.length === 0) {
-                return options.defaultDate ? options.defaultDate.clone() : options.defaultDate;
-            }
-            if (!defaultDate) {
-                options.defaultDate = false;
-                return periods;
-            }
-
-            options.defaultDate = defaultDate;
-
-            if (options.defaultDate && input.val().trim() === '') {
-                setValue(options.defaultDate);
-            }
+        if (arguments.length === 0) {
+            return options.defaultDate ? options.defaultDate.clone() : options.defaultDate;
+        }
+        if (!defaultDate) {
+            options.defaultDate = false;
             return periods;
-        };
+        }
+
+        options.defaultDate = defaultDate;
+
+        if (options.defaultDate && input.val().trim() === '') {
+            setValue(options.defaultDate);
+        }
+        return periods;
+    };
 
 		periods.singleSelection = function(singleSelection){
-			if (arguments.length === 0) {
-                return options.singleSelection;
-            }
+			  if (arguments.length === 0) {
+            return options.singleSelection;
+        }
 
-            if (typeof singleSelection !== 'boolean') {
-                throw new TypeError('singleSelection() expects a boolean parameter');
-            }
-            options.singleSelection = singleSelection;
-            if (widget) {
-                hide();
-                show();
-            }
-            return periods;
+        if (typeof singleSelection !== 'boolean') {
+            throw new TypeError('singleSelection() expects a boolean parameter');
+        }
+        options.singleSelection = singleSelection;
+        if (widget) {
+            hide();
+            show();
+        }
+        return periods;
 		};
 
 		periods.viewMode = function (newViewMode) {
-            if (arguments.length === 0) {
-                return options.viewMode;
-            }
+        if (arguments.length === 0) {
+            return options.viewMode;
+        }
 
-            if (typeof newViewMode !== 'string') {
-                throw new TypeError('viewMode() expects a string parameter');
-            }
+        if (typeof newViewMode !== 'string') {
+            throw new TypeError('viewMode() expects a string parameter');
+        }
 
-            if (viewModes.indexOf(newViewMode) === -1) {
-                throw new TypeError('viewMode() parameter must be one of (' + viewModes.join(', ') + ') value');
-            }
+        if (viewModes.indexOf(newViewMode) === -1) {
+            throw new TypeError('viewMode() parameter must be one of (' + viewModes.join(', ') + ') value');
+        }
 
-            options.viewMode = newViewMode;
-            currentViewMode = Math.max(viewModes.indexOf(newViewMode), minViewModeNumber);
+        options.viewMode = newViewMode;
+        currentViewMode = Math.max(viewModes.indexOf(newViewMode), minViewModeNumber);
 
-            showMode();
-            return periods;
-        };
+        showMode();
+        return periods;
+    };
 
 		periods.toolbarPlacement = function (toolbarPlacement) {
-            if (arguments.length === 0) {
-                return options.toolbarPlacement;
-            }
+        if (arguments.length === 0) {
+            return options.toolbarPlacement;
+        }
 
-            if (typeof toolbarPlacement !== 'string') {
-                throw new TypeError('toolbarPlacement() expects a string parameter');
-            }
-            if (toolbarPlacements.indexOf(toolbarPlacement) === -1) {
-                throw new TypeError('toolbarPlacement() parameter must be one of (' + toolbarPlacements.join(', ') + ') value');
-            }
-            options.toolbarPlacement = toolbarPlacement;
+        if (typeof toolbarPlacement !== 'string') {
+            throw new TypeError('toolbarPlacement() expects a string parameter');
+        }
+        if (toolbarPlacements.indexOf(toolbarPlacement) === -1) {
+            throw new TypeError('toolbarPlacement() parameter must be one of (' + toolbarPlacements.join(', ') + ') value');
+        }
+        options.toolbarPlacement = toolbarPlacement;
 
-            if (widget) {
-                hide();
-                show();
-            }
-            return periods;
-        };
+        if (widget) {
+            hide();
+            show();
+        }
+        return periods;
+    };
 
 		periods.showClear = function (showClear) {
-            if (arguments.length === 0) {
-                return options.showClear;
-            }
+        if (arguments.length === 0) {
+            return options.showClear;
+        }
 
-            if (typeof showClear !== 'boolean') {
-                throw new TypeError('showClear() expects a boolean parameter');
-            }
+        if (typeof showClear !== 'boolean') {
+            throw new TypeError('showClear() expects a boolean parameter');
+        }
 
-            options.showClear = showClear;
-            if (widget) {
-                hide();
-                show();
-            }
-            return periods;
-        };
+        options.showClear = showClear;
+        if (widget) {
+            hide();
+            show();
+        }
+        return periods;
+    };
 
 		periods.widgetPositioning = function (widgetPositioning) {
-            if (arguments.length === 0) {
-                return $.extend({}, options.widgetPositioning);
-            }
+        if (arguments.length === 0) {
+            return $.extend({}, options.widgetPositioning);
+        }
 
-            if (({}).toString.call(widgetPositioning) !== '[object Object]') {
-                throw new TypeError('widgetPositioning() expects an object variable');
+        if (({}).toString.call(widgetPositioning) !== '[object Object]') {
+            throw new TypeError('widgetPositioning() expects an object variable');
+        }
+        if (widgetPositioning.horizontal) {
+            if (typeof widgetPositioning.horizontal !== 'string') {
+                throw new TypeError('widgetPositioning() horizontal variable must be a string');
             }
-            if (widgetPositioning.horizontal) {
-                if (typeof widgetPositioning.horizontal !== 'string') {
-                    throw new TypeError('widgetPositioning() horizontal variable must be a string');
-                }
-                widgetPositioning.horizontal = widgetPositioning.horizontal.toLowerCase();
-                if (horizontalModes.indexOf(widgetPositioning.horizontal) === -1) {
-                    throw new TypeError('widgetPositioning() expects horizontal parameter to be one of (' + horizontalModes.join(', ') + ')');
-                }
-                options.widgetPositioning.horizontal = widgetPositioning.horizontal;
+            widgetPositioning.horizontal = widgetPositioning.horizontal.toLowerCase();
+            if (horizontalModes.indexOf(widgetPositioning.horizontal) === -1) {
+                throw new TypeError('widgetPositioning() expects horizontal parameter to be one of (' + horizontalModes.join(', ') + ')');
             }
-            if (widgetPositioning.vertical) {
-                if (typeof widgetPositioning.vertical !== 'string') {
-                    throw new TypeError('widgetPositioning() vertical variable must be a string');
-                }
-                widgetPositioning.vertical = widgetPositioning.vertical.toLowerCase();
-                if (verticalModes.indexOf(widgetPositioning.vertical) === -1) {
-                    throw new TypeError('widgetPositioning() expects vertical parameter to be one of (' + verticalModes.join(', ') + ')');
-                }
-                options.widgetPositioning.vertical = widgetPositioning.vertical;
+            options.widgetPositioning.horizontal = widgetPositioning.horizontal;
+        }
+        if (widgetPositioning.vertical) {
+            if (typeof widgetPositioning.vertical !== 'string') {
+                throw new TypeError('widgetPositioning() vertical variable must be a string');
             }
-            return periods;
-        };
+            widgetPositioning.vertical = widgetPositioning.vertical.toLowerCase();
+            if (verticalModes.indexOf(widgetPositioning.vertical) === -1) {
+                throw new TypeError('widgetPositioning() expects vertical parameter to be one of (' + verticalModes.join(', ') + ')');
+            }
+            options.widgetPositioning.vertical = widgetPositioning.vertical;
+        }
+        return periods;
+    };
 
 		periods.options = function (newOptions) {
-            if (arguments.length === 0) {
-                return $.extend(true, {}, options);
-            }
+        if (arguments.length === 0) {
+            return $.extend(true, {}, options);
+        }
 
-            if (!(newOptions instanceof Object)) {
-                throw new TypeError('options() options parameter should be an object');
+        if (!(newOptions instanceof Object)) {
+            throw new TypeError('options() options parameter should be an object');
+        }
+        $.extend(true, options, newOptions);
+        $.each(options, function (key, value) {
+            if (periods[key] !== undefined) {
+                periods[key](value);
+            } else {
+                throw new TypeError('option ' + key + ' is not recognized!');
             }
-            $.extend(true, options, newOptions);
-            $.each(options, function (key, value) {
-                if (periods[key] !== undefined) {
-                    periods[key](value);
-                } else {
-                    throw new TypeError('option ' + key + ' is not recognized!');
-                }
-            });
-            return periods;
-        };
+        });
+        return periods;
+    };
 
 		// initializing element and component attributes
-        if (element.is('input')) {
-            input = element;
+    if (element.is('input')) {
+        input = element;
+    } else {
+        input = element.find('.dateperiodsinput');
+        if (input.size() === 0) {
+            input = element.find('input');
+        } else if (!input.is('input')) {
+            throw new Error('CSS class "dateperiodsinput" cannot be applied to non input element');
+        }
+    }
+
+    if (element.hasClass('input-group')) {
+        // in case there is more then one 'input-group-addon' Issue #48
+        if (element.find('.dateperiodsbutton').size() === 0) {
+            component = element.find('[class^="input-group-"]');
         } else {
-            input = element.find('.dateperiodsinput');
-            if (input.size() === 0) {
-                input = element.find('input');
-            } else if (!input.is('input')) {
-                throw new Error('CSS class "dateperiodsinput" cannot be applied to non input element');
-            }
+            component = element.find('.dateperiodsbutton');
         }
+    }
 
-        if (element.hasClass('input-group')) {
-            // in case there is more then one 'input-group-addon' Issue #48
-            if (element.find('.dateperiodsbutton').size() === 0) {
-                component = element.find('[class^="input-group-"]');
-            } else {
-                component = element.find('.dateperiodsbutton');
-            }
-        }
-
-        if (!input.is('input')) {
-            throw new Error('Could not initialize DateTimePeriods without an input element');
-        }
+    if (!input.is('input')) {
+        throw new Error('Could not initialize DateTimePeriods without an input element');
+    }
 
 		$.extend(true, options, dataToOptions());
 
@@ -1108,34 +1107,34 @@
 		attachDatePeriodsElementEvents();
 
 		if (input.prop('disabled')) {
-            periods.disable();
-        }
+        periods.disable();
+    }
 
-        if (input.val().trim().length !== 0){
-            setValue(input.val().trim());
-        } else if (options.defaultDate) {
-            setValue(options.defaultDate);
-        }
+    if (input.val().trim().length !== 0){
+        setValue(input.val().trim());
+    } else if (options.defaultDate) {
+        setValue(options.defaultDate);
+    }
 
 		return periods;
 	};
 
 
 	/********************************************************************************
-     *
-     * jQuery plugin constructor and defaults object
-     *
-     ********************************************************************************/
+   *
+   * jQuery plugin constructor and defaults object
+   *
+   ********************************************************************************/
 
-    $.fn.datetimeperiods = function (options) {
-        return this.each(function () {
-            var $this = $(this);
-            if (!$this.data('DateTimePeriods')) {
-                options = $.extend(true, {}, $.fn.datetimeperiods.defaults, options);
-                $this.data('DateTimePeriods', dateTimePeriods($this, options));
-            }
-        });
-    };
+  $.fn.datetimeperiods = function (options) {
+      return this.each(function () {
+          var $this = $(this);
+          if (!$this.data('DateTimePeriods')) {
+              options = $.extend(true, {}, $.fn.datetimeperiods.defaults, options);
+              $this.data('DateTimePeriods', dateTimePeriods($this, options));
+          }
+      });
+  };
 
 	$.fn.datetimeperiods.defaults = {
 		defaultDate: false,
