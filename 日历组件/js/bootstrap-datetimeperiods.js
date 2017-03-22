@@ -489,8 +489,8 @@
 						index++;
 					}
           if(type === 'day'){
-            spans.push($('<span>').addClass('pointday').html('<input type="checkbox" class="input-position" name="'+type+'" value="'+0xFD+'"/>0xFD'));
-            spans.push($('<span>').addClass('pointday').html('<input type="checkbox" class="input-position" name="'+type+'" value="'+0xFE+'"/>0xFE'));
+            spans.push($('<span>').addClass('pointday').html('<input type="checkbox" class="input-position" name="'+type+'" value="0xFD"/>0xFD'));
+            spans.push($('<span>').addClass('pointday').html('<input type="checkbox" class="input-position" name="'+type+'" value="0xFE"/>0xFE'));
           }
 				}
 				return spans;
