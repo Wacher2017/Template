@@ -1,0 +1,236 @@
+/* CSS Document */
+.bootstrap-datetimeperiods-widget.dropdown-menu {
+  margin: 2px 0;
+  padding: 4px;
+  width: 22em;
+  background-color: #F2F8FB;
+}
+.bootstrap-datetimeperiods-widget.dropdown-menu:before,
+.bootstrap-datetimeperiods-widget.dropdown-menu:after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+}
+.bootstrap-datetimeperiods-widget.dropdown-menu.bottom:before {
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #ccc;
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  top: -7px;
+  left: 7px;
+}
+.bootstrap-datetimeperiods-widget.dropdown-menu.bottom:after {
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid white;
+  top: -6px;
+  left: 8px;
+}
+.bootstrap-datetimeperiods-widget.dropdown-menu.top:before {
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #ccc;
+  border-top-color: rgba(0, 0, 0, 0.2);
+  bottom: -7px;
+  left: 6px;
+}
+.bootstrap-datetimeperiods-widget.dropdown-menu.top:after {
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid white;
+  bottom: -6px;
+  left: 7px;
+}
+.bootstrap-datetimeperiods-widget.dropdown-menu.pull-right:before {
+  left: auto;
+  right: 6px;
+}
+.bootstrap-datetimeperiods-widget.dropdown-menu.pull-right:after {
+  left: auto;
+  right: 7px;
+}
+.bootstrap-datetimeperiods-widget .list-unstyled {
+  margin: 0;
+}
+.bootstrap-datetimeperiods-widget a[data-action] {
+  padding: 6px 0;
+}
+.bootstrap-datetimeperiods-widget a[data-action]:active {
+  box-shadow: none;
+}
+.bootstrap-datetimeperiods-widget button[data-action] {
+  padding: 6px;
+}
+.bootstrap-datetimeperiods-widget .periods-switch {
+  text-align: center;
+}
+.bootstrap-datetimeperiods-widget .periods-switch::after {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  content: "Toggle Date and Time Screens";
+}
+.bootstrap-datetimeperiods-widget .periods-switch td {
+  padding: 0;
+  margin: 0;
+  height: auto;
+  width: auto;
+  line-height: inherit;
+}
+.bootstrap-datetimeperiods-widget .periods-switch td span {
+  line-height: 2.5;
+  height: 2.5em;
+  width: 100%;
+  cursor: pointer;
+}
+.bootstrap-datetimeperiods-widget table {
+  width: 100%;
+  margin: 0;
+}
+.bootstrap-datetimeperiods-widget td,
+.bootstrap-datetimeperiods-widget th {
+  text-align: center;
+  border-radius: 4px;
+}
+.bootstrap-datetimeperiods-widget th {
+  height: 20px;
+  line-height: 20px;
+  width: 20px;
+  background: #BCDAEF;
+}
+.bootstrap-datetimeperiods-widget th.periods-switch {
+  width: 145px;
+}
+.bootstrap-datetimeperiods-widget th.disabled,
+.bootstrap-datetimeperiods-widget th.disabled:hover {
+  background: none;
+  color: #777777;
+  cursor: not-allowed;
+}
+.bootstrap-datetimeperiods-widget td {
+  height: 24px;
+  line-height: 24px;
+  width: 54px;
+  cursor: default;
+}
+
+.bootstrap-datetimeperiods-widget td.active,
+.bootstrap-datetimeperiods-widget td.active:hover {
+  background-color: #428bca;
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.bootstrap-datetimeperiods-widget td.disabled,
+.bootstrap-datetimeperiods-widget td.disabled:hover {
+  background: none;
+  color: #777777;
+  cursor: not-allowed;
+}
+.bootstrap-datetimeperiods-widget .periods-span {
+  	width: 100%;
+	text-align: left;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-years .periods-span {
+    padding-left: 0px;
+	height: 15px;
+    line-height: 15px;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-months .periods-span,
+.bootstrap-datetimeperiods-widget .dateperiods-weeks .periods-span,
+.bootstrap-datetimeperiods-widget .dateperiods-hours .periods-span {
+    padding-left: 20px;
+	height: 30px;
+    line-height: 30px;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-days .day,
+.bootstrap-datetimeperiods-widget .dateperiods-days .pointday{
+  float: left;
+  height: 30px;
+  line-height: 30px;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-days .periods-span{
+  padding-left: 8px;
+  height: 30px;
+  line-height: 30px;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-minutes .periods-span,
+.bootstrap-datetimeperiods-widget .dateperiods-seconds .periods-span {
+    padding-left: 2px;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-days .day{
+  width: 45px;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-days .pointday{
+  width: 60px;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-weeks .week {
+  width: 48px;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-weeks .pointweek {
+  width: 62px;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-weeks .lastweek {
+  width: 77px;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-weeks .lastweekbutx {
+  width: 128px;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-weeks .periods-span {
+  border-top: 1px solid #e0e4e6;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-minutes .minute,
+.bootstrap-datetimeperiods-widget .dateperiods-seconds .second {
+  width: 33px;
+}
+/*.bootstrap-datetimeperiods-widget .dateperiods-hundredths .hundredth {
+  width: 29px;
+}*/
+.bootstrap-datetimeperiods-widget .dateperiods-hundredths td span{
+  margin-right: 18px;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-minutes .periods-span,
+.bootstrap-datetimeperiods-widget .dateperiods-seconds .periods-span,
+/*.bootstrap-datetimeperiods-widget .dateperiods-hundredths .periods-span,*/
+.bootstrap-datetimeperiods-widget .dateperiods-minutes .minute,
+.bootstrap-datetimeperiods-widget .dateperiods-seconds .second/*,
+.bootstrap-datetimeperiods-widget .dateperiods-hundredths .hundredth*/{
+  float: left;
+  height: 22px;
+  line-height: 22px;
+}
+.bootstrap-datetimeperiods-widget td span {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  margin: 2px 1.5px;
+  cursor: default;
+  border-radius: 4px;
+}
+.bootstrap-datetimeperiods-widget .dateperiods-years td:hover,
+.bootstrap-datetimeperiods-widget td span:hover {
+  background: #eeeeee;
+}
+.bootstrap-datetimeperiods-widget td span.disabled,
+.bootstrap-datetimeperiods-widget td span.disabled:hover {
+  background: none;
+  color: #777777;
+  cursor: not-allowed;
+}
+
+.bootstrap-datetimeperiods-widget .dateperiods th div{
+  cursor: default;
+}
+.input-group.date .input-group-addon {
+  cursor: pointer;
+}
+.sys-padding-margin {margin: 0;padding: 0;}
+.btn-text {font-weight: bold;}
+.toolbar-td-width{width:150px !important;;}
+.input-position{position: relative;top: 1px;right: 2px;}
+.span-dispaly{display:none !important;}
