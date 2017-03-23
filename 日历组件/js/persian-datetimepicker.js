@@ -1048,7 +1048,6 @@
             },
 
 			setValue = function (targetMoment,target) {
-        console.log(targetMoment);
                 var oldDate = unset ? null : p_today;
                 // case of calling setValue(null or false)
                 if (!targetMoment) {
