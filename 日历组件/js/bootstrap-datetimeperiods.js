@@ -261,8 +261,8 @@
 			checkWildcard = function(wild,type){
 				wild.on('click',function(){
 					if(this.checked){
-						widget.find('.dateperiods-'+type+'s').find('td').find("input[name!='pointweek']").prop('checked', false);
-						widget.find('.dateperiods-'+type+'s').find('td').find("input[name!='pointweek']").prop("disabled", true);
+						widget.find('.dateperiods-'+type+'s').find('td').find("input[id!='weekEvery']").prop('checked', false);
+						widget.find('.dateperiods-'+type+'s').find('td').find("input").prop("disabled", true);
 					}else{
 						if(isHasMulCheck() || options.singleSelection)
 							widget.find('.dateperiods-'+type+'s').find('td').find("input[id!='"+type+"']").prop("disabled", false);
@@ -319,23 +319,22 @@
 
 			eachDayOrWeek = function(){
 				var td = widget.find('td');
-				if(td.find('input[name="day"]:checked').length){
-					widget.find('.dateperiods-weeks').find("input").prop("disabled", true);
-				} else if(td.find('input[name="week"]:checked').length){
-					widget.find('.dateperiods-days').find("input").prop("disabled", true);
-				} else if(td.find('input[name="pointweek"]:checked').length){
-          widget.find('.dateperiods-days').find("input").prop("disabled", true);
-          if(widget.find('.dateperiods-weeks').find('th').find('input:checked').length){
-            widget.find('.dateperiods-weeks').find("input[id='week']").prop("disabled", true);
-          }
-        } else {
-          widget.find('.dateperiods-weeks').find("input[id!='week']").prop("disabled", false);
-          widget.find('.dateperiods-days').find("input[id!='day']").prop("disabled", false);
-          if(widget.find('.dateperiods-weeks').find('th').find('input:checked').length){
-            widget.find('.dateperiods-weeks').find("input[id='week']").prop("disabled", true);
-            widget.find('.dateperiods-weeks').find("input[name='week']").prop("disabled", true);
-          }
+        if(td.find('input[name="year"]:checked').length && td.find('input[name="month"]:checked').length){
+          widget.find('.dateperiods-weeks').find("input[type='radio']").prop("disabled", true);
+        }else{
+          widget.find('.dateperiods-weeks').find("input[type='radio']").prop("disabled", false);
         }
+        if(td.find('input[name="week"][type="checkbox"]:checked').length || td.find('input[name="week"][id="weekEvery"]:checked').length){
+          widget.find('.dateperiods-weeks').find('#hint').hide();
+        }
+				// if(td.find('input[name="day"]:checked').length){
+				// 	widget.find('.dateperiods-weeks').find("input").prop("disabled", true);
+				// } else if(td.find('input[name="week"][id!="weekEvery"]:checked').length){
+				// 	widget.find('.dateperiods-days').find("input").prop("disabled", true);
+				// } else {
+        //   widget.find('.dateperiods-weeks').find("input[id!='week']").prop("disabled", false);
+        //   widget.find('.dateperiods-days').find("input[id!='day']").prop("disabled", false);
+        // }
 			},
 
 			excuteCheckOne = function(name,value,type){
@@ -462,13 +461,16 @@
           if(type === 'week'){
             for (var i = 0; i < ponitWeeks.length; i++) {
               if(ponitWeeks[i] === 'The last'){
-                spans.push($('<span>').addClass('lastweek').html('<input type="checkbox" class="input-position" name="pointweek" value="'+(i+100)+'"/>'+ ponitWeeks[i]));
+                spans.push($('<span>').addClass('lastweek').html('<input type="radio" class="input-position" name="'+type+'" value="'+(i+100)+'"/>'+ ponitWeeks[i]));
               }else if(ponitWeeks[i] === 'The last but one'){
-                spans.push($('<span>').addClass('lastweekbutx').html('<input type="checkbox" class="input-position" name="pointweek" value="'+(i+100)+'"/>'+ ponitWeeks[i]));
+                spans.push($('<span>').addClass('lastweekbutx').html('<input type="radio" class="input-position" name="'+type+'" value="'+(i+100)+'"/>'+ ponitWeeks[i]));
+              }else if(ponitWeeks[i] === 'Every'){
+                spans.push($('<span>').addClass('pointweek').html('<input id="weekEvery" type="radio" class="input-position" name="'+type+'" value="'+(i+100)+'" checked/>'+ ponitWeeks[i]));
               }else{
-                spans.push($('<span>').addClass('pointweek').html('<input type="checkbox" class="input-position" name="pointweek" value="'+(i+100)+'"/>'+ ponitWeeks[i]));
+                spans.push($('<span>').addClass('pointweek').html('<input type="radio" class="input-position" name="'+type+'" value="'+(i+100)+'"/>'+ ponitWeeks[i]));
               }
             }
+            spans.push($('<span>').attr('id', 'hint').addClass('periods periods-span').html('Please select the following week!'));
           }
           if(type!=='hundredth'){
             spans.push($('<span>').addClass('periods-span').html('<input id="'+type+'" type="checkbox" class="input-position"/>Check All'));
@@ -610,7 +612,6 @@
 										}else if(viewModes[k] !== 'weeks'){
 											data[k] = '00';
 										}
-
 									}
 								}
 								break;
@@ -698,8 +699,15 @@
 					switch($(e.target).parent().text()){
 						case 'Month': showMode(1);break;
 						case 'Day': showMode(2);break;
-						case 'Week': showMode(3);break;
-						case 'Hour': showMode(4);break;
+						case 'Week': widget.find('.dateperiods-weeks').find('#hint').hide();
+                        showMode(3);break;
+						case 'Hour': if(widget.find('td').find('input[name="week"][type="radio"][id!="weekEvery"]:checked').length &&
+                            widget.find('td').find('input[name="week"][type="checkbox"]:checked').length == 0){
+                           widget.find('.dateperiods-weeks').find('#hint').show();
+                           break;
+                         }else{
+                           showMode(4);break;
+                         }
 						case 'Minute': showMode(5);break;
 						case 'Second': showMode(6);break;
 						case 'Hundredth': showMode(7);break;
@@ -707,6 +715,31 @@
 					}
 				},
 				backward:function(e){
+          //Return to remove the current panel options
+          if(currentViewMode > 0){
+              switch(currentViewMode){
+    						case 1: widget.find('.dateperiods-months').find("input").prop('checked', false);break;
+    						case 2: widget.find('.dateperiods-days').find("input").prop('checked', false);break;
+    						case 3: widget.find('.dateperiods-weeks').find("input").prop('checked', false);
+                        widget.find('.dateperiods-weeks').find("input[id='weekEvery']").prop('checked', true);
+                        widget.find('.dateperiods-weeks').find('#hint').hide();
+                        break;
+    						case 4: widget.find('.dateperiods-hours').find("input").prop('checked', false);break;
+    						case 5: widget.find('.dateperiods-minutes').find("input").prop('checked', false);break;
+    						case 6: widget.find('.dateperiods-seconds').find("input").prop('checked', false);break;
+    						case 7: widget.find('.dateperiods-hundredths').find("input").prop('checked', false);break;
+    						default: break;
+    					}
+          }
+          //Return to disable the check all
+          widget.find('td').find('span[class="periods-span"]').find("input").prop("disabled", false);
+          for(var i=0; i<viewModes.length; i++){
+  					var type = viewModes[i].substring(0,viewModes[i].length-1);
+  					if(widget.find('td').find('input[name="'+type+'"]:checked').length>1){
+  							disabledCheckAll(i);
+  					}
+  				}
+          //show the current panel
 					if(currentViewMode <= viewModes.indexOf(options.viewMode)){
 						if(viewModes.indexOf(options.viewMode) == 2)
 							currentViewMode = viewModes.indexOf(options.viewMode)+2;
