@@ -1192,7 +1192,7 @@
 
 	$.fn.datetimeperiods.defaults = {
 		defaultDate: false,
-		singleSelection: true,
+		singleSelection: false,
 		viewMode: 'years',
 		toolbarPlacement: 'default',
 		showClear: true,
