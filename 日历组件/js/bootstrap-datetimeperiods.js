@@ -57,7 +57,7 @@
 				clear: 'glyphicon glyphicon-trash'
 			},
 			shortWeeks = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
-      ponitWeeks = ['Every','1st','2nd','3rd','4th','The last','The last but one'],
+      ponitWeeks = ['Every','1st','2nd','3rd','4th','The last but one','The last'],
 			viewModes = ['years', 'months', 'days', 'weeks', 'hours', 'minutes', 'seconds', 'hundredths'],
 			verticalModes = ['top', 'bottom', 'auto'],
 			horizontalModes = ['left', 'right', 'auto'],
@@ -460,14 +460,14 @@
 				}else{
           if(type === 'week'){
             for (var i = 0; i < ponitWeeks.length; i++) {
-              if(ponitWeeks[i] === 'The last'){
-                spans.push($('<span>').addClass('lastweek').html('<input type="radio" class="input-position" name="'+type+'" value="'+(i+100)+'"/>'+ ponitWeeks[i]));
-              }else if(ponitWeeks[i] === 'The last but one'){
-                spans.push($('<span>').addClass('lastweekbutx').html('<input type="radio" class="input-position" name="'+type+'" value="'+(i+100)+'"/>'+ ponitWeeks[i]));
-              }else if(ponitWeeks[i] === 'Every'){
+              if(ponitWeeks[i] === 'The last but one'){
+                spans.push($('<span>').addClass('lastweekbutx').html('<input type="radio" class="input-position" name="'+type+'" value="'+(i+1000)+'"/>'+ ponitWeeks[i]));
+              }else if(ponitWeeks[i] === 'The last'){
+                spans.push($('<span>').addClass('lastweek').html('<input type="radio" class="input-position" name="'+type+'" value="'+(i+1000)+'"/>'+ ponitWeeks[i]));
+              } else if(ponitWeeks[i] === 'Every'){
                 spans.push($('<span>').addClass('pointweek').html('<input id="weekEvery" type="radio" class="input-position" name="'+type+'" value="'+(i+100)+'" checked/>'+ ponitWeeks[i]));
               }else{
-                spans.push($('<span>').addClass('pointweek').html('<input type="radio" class="input-position" name="'+type+'" value="'+(i+100)+'"/>'+ ponitWeeks[i]));
+                spans.push($('<span>').addClass('pointweek').html('<input type="radio" class="input-position" name="'+type+'" value="'+(i+1000)+'"/>'+ ponitWeeks[i]));
               }
             }
             spans.push($('<span>').attr('id', 'hint').addClass('periods periods-span').html('Please select the following week!'));
@@ -597,26 +597,47 @@
 			},
 
 			getFinalResult = function(temp){
-				var result = '';
+				var result = '', rstemp = '', lastSel = 0;
 				if(temp.length!==0){
 					var datas = temp.split(";");
+          if(widget.find('td').find('input[type="radio"][name="week"][id!="weekEvery"]:checked').length){
+            for(var i=0; i<datas.length; i++){
+    					var data = datas[i].split(",");
+    					if(data[0]=='0xFFFF' || data[1] == '0xFF'){
+                switch(parseInt(widget.find('td').find('input[type="radio"][name="week"]:checked').val())){
+                  case 1001:data[2] = "01";break;
+                  case 1002:data[2] = "08";break;
+                  case 1003:data[2] = "15";break;
+                  case 1004:data[2] = "22";break;
+                  case 1005:data[2] = "0xFD";break;
+                  case 1006:data[2] = "0xFE";break;
+                  defaut:break;
+                }
+    					}
+    					rstemp += data+ ";";
+    				}
+            rstemp = rstemp.substring(0,rstemp.length-1);
+            datas = [];
+            datas = rstemp.split(";");
+          }
+          for(var i=0; i<viewModes.length; i++){
+            var type = viewModes[i].substring(0,viewModes[i].length-1);
+            if(widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').length){
+              lastSel = i;
+            }
+          }
 					for(var i=0; i<datas.length; i++){
 						var data = datas[i].split(",");
 						var old = [].concat(data);
-						for(var j=0; j<old.length; j++){
-							if(old[j].indexOf('0xFF')==-1){
-								for(var k=j+1; k<old.length; k++){
-									if(old[k] == '0xFF' && widget.find('.dateperiods-'+viewModes[k]).find('th').find('input:checked').length<1){
-										if(viewModes[k] === 'months' || viewModes[k] === 'days'){
-											data[k] = '01';
-										}else if(viewModes[k] !== 'weeks'){
-											data[k] = '00';
-										}
-									}
-								}
-								break;
-							}
-						}
+            for(var k=(lastSel+1); k<old.length; k++){
+              if(old[k] == '0xFF' && widget.find('.dateperiods-'+viewModes[k]).find('th').find('input:checked').length<1){
+                if(viewModes[k] === 'months' || viewModes[k] === 'days'){
+                  data[k] = '01';
+                }else if(viewModes[k] !== 'weeks'){
+                  data[k] = '00';
+                }
+              }
+            }
 						result += data+ ";";
 					}
 					result = result.substring(0,result.length-1);
@@ -632,18 +653,17 @@
 				//get maxchecked len and type
 				for(var i=0; i<viewModes.length; i++){
 					var type = viewModes[i].substring(0,viewModes[i].length-1);
-					if(widget.find('td').find('input[name="'+type+'"]:checked').length>1){
+					if(widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').length>1){
 						multiType = type;
-						len = widget.find('td').find('input[name="'+type+'"]:checked').length;
+						len = widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').length;
 						break;
 					}
 				}
-
 				for(var j=0; j<len; j++){
 					for(var k=0; k<viewModes.length; k++){
 						var type = viewModes[k].substring(0,viewModes[k].length-1);
 						if(type == multiType){
-							widget.find('td').find('input[name="'+type+'"]:checked').each(function(n){
+							widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').each(function(n){
 								if(j==n){
 									if(result == ''){
 										result = $(this).val();
@@ -657,14 +677,14 @@
 								}
 							});
 						}else{
-							if(widget.find('td').find('input[name="'+type+'"]:checked').length>0){
+							if(widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').length>0){
 								if(result == ''){
-									result = widget.find('td').find('input[name="'+type+'"]:checked').val();
+									result = widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').val();
 								}else{
 									if(type === 'year'){
-										result += widget.find('td').find('input[name="'+type+'"]:checked').val();
+										result += widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').val();
 									}else{
-										result += ','+widget.find('td').find('input[name="'+type+'"]:checked').val();
+										result += ','+widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').val();
 									}
 								}
 							}else{
