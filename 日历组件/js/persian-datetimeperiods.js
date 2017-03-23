@@ -57,6 +57,7 @@
 				clear: 'glyphicon glyphicon-trash'
 			},
 			shortWeeks = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+      ponitWeeks = ['Every','1st','2nd','3rd','4th','The last but one','The last'],
 			viewModes = ['years', 'months', 'days', 'weeks', 'hours', 'minutes', 'seconds', 'hundredths'],
 			verticalModes = ['top', 'bottom', 'auto'],
 			horizontalModes = ['left', 'right', 'auto'],
@@ -65,7 +66,7 @@
 			JULIAN_EPOCH_MILLIS = -210866803200000,
 			ONE_DAY_MILLIS = 24 * 60* 60 * 1000,
 			EPOCH = 1948321,
-			
+
 			/********************************************************************************
              *
              * Private functions
@@ -81,7 +82,7 @@
 						.append($('<tr>')
 							.append($('<td>').attr('colspan', '5'))
 							);
-						
+
 				return [
 					$('<div>').addClass('dateperiods-years')
 						.append($('<table>').addClass('table-condensed')
@@ -125,7 +126,7 @@
 							)
 				];
 			},
-			
+
 			getToolbar = function () {
 				var row = [];
 				row.push($('<td>').append($('<a>').attr('data-action', 'backward').append($('<span>').addClass(icons.backward))));
@@ -138,15 +139,15 @@
 				row.push($('<td>').attr('id','placehold').addClass('toolbar-td-width'));
 				return $('<table>').addClass('table-condensed').append($('<tbody>').append($('<tr>').append(row)));
 			},
-			
+
 			getTemplate = function () {
                var template = $('<div>').addClass('bootstrap-datetimeperiods-widget dropdown-menu'),
 					mainView = $('<div>').addClass('dateperiods').append(getMainTemplate()),
 					content = $('<ul>').addClass('list-unstyled'),
 					toolbar = $('<li>').addClass('periods-switch').append(getToolbar());
-	
+
 				content.append($('<li>').append(mainView));
-				
+
 				if (options.toolbarPlacement === 'top') {
 					content.append(toolbar);
 				}
@@ -158,7 +159,7 @@
 				}
 				return template.append(content);
             },
-			
+
 			dataToOptions = function () {
                 var eData = element.data(),
                     dataOptions = {};
@@ -175,13 +176,13 @@
                 });
                 return dataOptions;
             },
-			
+
 			place = function () {
                 var offset = (component || element).position(),
 					vertical = options.widgetPositioning.vertical,
 					horizontal = options.widgetPositioning.horizontal,
 					parent;
-	
+
 				if (options.widgetParent) {
 					parent = options.widgetParent.append(widget);
 				} else if (element.is('input')) {
@@ -190,7 +191,7 @@
 					parent = element;
 					element.children().first().after(widget);
 				}
-	
+
 				// Top and bottom logic
 				if (vertical === 'auto') {
 					if ((component || element).offset().top + widget.height() > $(window).height() + $(window).scrollTop() &&
@@ -200,7 +201,7 @@
 						vertical = 'bottom';
 					}
 				}
-	
+
 				// Left and right logic
 				if (horizontal === 'auto') {
 					if (parent.width() < offset.left + widget.outerWidth()) {
@@ -209,30 +210,30 @@
 						horizontal = 'left';
 					}
 				}
-	
+
 				if (vertical === 'top') {
 					widget.addClass('top').removeClass('bottom');
 				} else {
 					widget.addClass('bottom').removeClass('top');
 				}
-	
+
 				if (horizontal === 'right') {
 					widget.addClass('pull-right');
 				} else {
 					widget.removeClass('pull-right');
 				}
-	
+
 				// find the first parent element that has a relative css positioning
 				if (parent.css('position') !== 'relative') {
 					parent = parent.parents().filter(function () {
 						return $(this).css('position') === 'relative';
 					}).first();
 				}
-	
+
 				if (parent.length === 0) {
 					throw new Error('datetimeperiods component should be placed within a relative positioned container');
 				}
-	
+
 				widget.css({
 					top: vertical === 'top' ? 'auto' : offset.top + element.outerHeight(),
 					bottom: vertical === 'top' ? offset.top + element.outerHeight() : 'auto',
@@ -240,14 +241,14 @@
 					right: horizontal === 'left' ? 'auto' : parent.css('padding-right')
 				});
             },
-			
+
             notifyEvent = function (e) {
                 if (e.type === 'dp.change') {
                     return;
                 }
                 element.trigger(e);
             },
-			
+
 			checkAll = function(sel,type){
 				sel.on('click',function(){
 					if(this.checked){
@@ -260,11 +261,11 @@
 					}
 				});
 			},
-			
-			checkWildcard = function(wild,type){
+
+      checkWildcard = function(wild,type){
 				wild.on('click',function(){
 					if(this.checked){
-						widget.find('.dateperiods-'+type+'s').find('td').find("input").prop('checked', false);
+						widget.find('.dateperiods-'+type+'s').find('td').find("input[id!='weekEvery']").prop('checked', false);
 						widget.find('.dateperiods-'+type+'s').find('td').find("input").prop("disabled", true);
 					}else{
 						if(isHasMulCheck() || options.singleSelection)
@@ -274,18 +275,18 @@
 					}
 				});
 			},
-			
+
 			checkOne = function(type,value){
-				widget.find('.dateperiods-'+type+'s').find('td').find("input[value!='"+value+"']:checked").prop("checked", false);
+				widget.find('.dateperiods-'+type+'s').find('td').find("input[type='checkbox'][value!='"+value+"']:checked").prop("checked", false);
 			},
-			
+
 			disabledCheckAll = function(type){
 				for(var i=0; i<viewModes.length; i++){
 					if(i!=type || options.singleSection)
 						widget.find('.dateperiods-'+viewModes[i]).find("input[id='"+viewModes[i].substring(0,viewModes[i].length-1)+"']").prop("disabled", true);
 				}
 			},
-			
+
 			isHasMulCheck = function(type){
 				var td = widget.find('td');
 				if(type === 'year'){
@@ -303,7 +304,7 @@
 					return td.find('input[name="hour"]:checked').length>1 || td.find('input[name="minute"]:checked').length>1
 						|| td.find('input[name="second"]:checked').length>1 || td.find('input[name="hundredth"]:checked').length>1;
 				}else if(type === 'hour'){
-					return td.find('input[name="minute"]:checked').length>1 || td.find('input[name="second"]:checked').length>1 
+					return td.find('input[name="minute"]:checked').length>1 || td.find('input[name="second"]:checked').length>1
 						|| td.find('input[name="hundredth"]:checked').length>1;
 				}else if(type === 'minute'){
 					return td.find('input[name="second"]:checked').length>1 || td.find('input[name="hundredth"]:checked').length>1;
@@ -312,26 +313,34 @@
 				}else{
 					return td.find('input[name="year"]:checked').length>1 || td.find('input[name="month"]:checked').length>1 || td.find('input[name="day"]:checked').length>1
 						||td.find('input[name="week"]:checked').length>1 || td.find('input[name="hour"]:checked').length>1 || td.find('input[name="minute"]:checked').length>1
-						|| td.find('input[name="second"]:checked').length>1 || td.find('input[name="hundredth"]:checked').length>1;	
+						|| td.find('input[name="second"]:checked').length>1 || td.find('input[name="hundredth"]:checked').length>1;
 				}
 			},
-			
-			isLeapYear = function(year){  
-				return (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);  
+
+			isLeapYear = function(year){
+				return (year % 4 == 0) && (year % 100 != 0 || year % 400 == 0);
 			},
-			
+
 			eachDayOrWeek = function(){
-				var td = widget.find('td');
-				if(td.find('input[name="day"]:checked').length){
-					widget.find('.dateperiods-weeks').find("input").prop("disabled", true);
-				}else if(td.find('input[name="week"]:checked').length){
-					widget.find('.dateperiods-days').find("input").prop("disabled", true);
-				}else{
-					widget.find('.dateperiods-weeks').find("input[id!='week']").prop("disabled", false);
-					widget.find('.dateperiods-days').find("input[id!='day']").prop("disabled", false);
-				}
+        var td = widget.find('td');
+        if(td.find('input[name="year"]:checked').length && td.find('input[name="month"]:checked').length){
+          widget.find('.dateperiods-weeks').find("input[type='radio']").prop("disabled", true);
+        }else{
+          widget.find('.dateperiods-weeks').find("input[type='radio']").prop("disabled", false);
+        }
+        if(td.find('input[name="week"][type="checkbox"]:checked').length || td.find('input[name="week"][id="weekEvery"]:checked').length){
+          widget.find('.dateperiods-weeks').find('#hint').hide();
+        }
+        // if(td.find('input[name="day"]:checked').length){
+				// 	widget.find('.dateperiods-weeks').find("input").prop("disabled", true);
+				// } else if(td.find('input[name="week"][id!="weekEvery"]:checked').length){
+				// 	widget.find('.dateperiods-days').find("input").prop("disabled", true);
+				// } else {
+        //   widget.find('.dateperiods-weeks').find("input[id!='week']").prop("disabled", false);
+        //   widget.find('.dateperiods-days').find("input[id!='day']").prop("disabled", false);
+        // }
 			},
-			
+
 			excuteCheckOne = function(name,value,type){
 				for(var i=0; i<viewModes.length; i++){
 					if(viewModes[i] != type){
@@ -341,7 +350,7 @@
 					}
 				}
 			},
-			
+
 			excuteCheckMode = function(name,value){
 				var td = widget.find('td');
 				if(td.find('input[name="year"]:checked').length<=1 && td.find('input[name="month"]:checked').length<=1 && td.find('input[name="day"]:checked').length<=1
@@ -365,10 +374,10 @@
 					}
 				}
 			},
-			
+
 			limitMuilCheck = function(){
 				if(options.singleSelection){
-					disabledCheckAll();	
+					disabledCheckAll();
 					widget.find('td').find('input').on('click',function(){
 						eachDayOrWeek();
 						for(var i=0; i<viewModes.length; i++){
@@ -382,7 +391,7 @@
 					});
 				}
 			},
-			
+
 			showMode = function (dir) {
 				if (!widget) {
 					return;
@@ -393,7 +402,7 @@
 				if (dir) {
 					currentViewMode = Math.max(minViewModeNumber, Math.min(7, dir));
 				}
-				
+
 				widget.find('.dateperiods > div').hide().filter('.dateperiods-' + datePeriodsModes[currentViewMode].clsName).show();
 				var btnView = widget.find('.periods-switch');
 				switch(currentViewMode){
@@ -403,7 +412,7 @@
 					case 1:	btnView.find('#btnText').html('Day<i class="'+icons.forward+'" style="margin-left:5px;"></i>');
 							btnView.find('#btn').show();btnView.find('#week').show();btnView.find('#placehold').hide();
 							break;
-					case 2:	
+					case 2:
 					case 3:	btnView.find('#btnText').html('Hour<i class="'+icons.forward+'" style="margin-left:5px;"></i>');
 							btnView.find('#btn').show();btnView.find('#week').hide();btnView.find('#placehold').hide();
 							break;
@@ -420,9 +429,9 @@
 							break
 					default: break;
 				}
-				
+
 			},
-			
+
 			changeDateToString = function (date) {
 				var date=new Date(date);
 				var year=date.getFullYear();
@@ -438,25 +447,25 @@
 				if (parseInt(second)<10) second = "0" + second;
 				return year + "-" +month + "-" +day + " " +hour +":" +minute +":" +second;
 			},
-		
+
 			div = function (a,b){
 				return Math.floor(a / b);
 			},
-			
+
 			getJulianDay = function (year,month,day){
 				return div(new Date(year,month,day,8,1,1) - JULIAN_EPOCH_MILLIS, ONE_DAY_MILLIS);
 			},
-			
+
 			mod = function (a,b){
 				return (a - b * Math.floor(a / b));
 			},
-			
+
 			pj = function (y, m, d){
 				var a = y - 474;
 				var b = mod(a, 2820) + 474;
 				return (EPOCH - 1) + 1029983 * div(a, 2820) + 365 * (b - 1) + div(682 * b - 110, 2816) + (m > 6? 30 * m + 6: 31 * m) + d;
 			},
-			
+
 			jp = function (j){
 				var a = j - pj(475, 0, 1);
 				var b = div(a, 1029983);
@@ -468,19 +477,19 @@
 				var day = j - (pj(year, month, 1) - 1);
 				return (year << 16) | (month << 8) | day;
 			},
-			
+
 			y = function (r){
 				return r>>16;
 			},
-			
+
 			m = function (r){
 				return (r & 0xff00) >> 8;
 			},
-			
+
 			d = function (r){
 				return (r & 0xff);
 			},
-			
+
 			getPersianDay = function (year,month,day){
 				var julianDay = getJulianDay(year,month,day);
 				var r = jp(julianDay);
@@ -492,16 +501,16 @@
 				persiaDate.year  = y1;
 				persiaDate.month = m1;
 				persiaDate.day = d1;
-				
+
 				return persiaDate;
 			},
-			
+
 			setJulianDay = function(julianDay){
 				var current = new Date();
 				var year = current.getFullYear();
 				var month = current.getMonth()+1;
 				var day = current.getDate();
-				
+
 				var datetimevalue = JULIAN_EPOCH_MILLIS + julianDay * ONE_DAY_MILLIS + mod(new Date(year,month,day,8,1,1) - JULIAN_EPOCH_MILLIS, ONE_DAY_MILLIS);
 				current = new Date(datetimevalue);
 				var julianDate = new Object();
@@ -510,44 +519,44 @@
 				julianDate.day = current.getDate();
 				return julianDate;
 			},
-			
+
 			calendarToPersian = function (datetimeValue){
 				var yearValue = datetimeValue.substring(0,4)*1;//Year value
 				var monthValue = datetimeValue.substring(5,7)*1;//Month value
 				var dayValue =datetimeValue.substring(8,10)*1;//Day value
-				
+
 				monthValue -= 1;
-				
+
 				var persianDate = getPersianDay(yearValue,monthValue,dayValue);
-				
+
 				persianDate.month += 1;
-				
+
 				persianDate.month = persianDate.month.toString().length==1?"0"+persianDate.month:persianDate.month;
 				persianDate.day = persianDate.day.toString().length==1?"0"+persianDate.day:persianDate.day;
 				return persianDate.year+"-"+persianDate.month+"-"+persianDate.day+" "+datetimeValue.substring(11,datetimeValue.length);
 			},
-			
+
 			calendarToPersianForString = function(datetime) {
 				var date_s = changeDateToString(datetime);
 				var persian_s = calendarToPersian(date_s);
 				return persian_s;
 			},
-			
+
 			persianToGregorian = function(datetimeValue){
 				 var array = new Array();
 				 array = datetimeValue.split("-");
 				 var persiaYear = datetimeValue.substring(0,4)*1;//Year value
 				 var persiaMonth = datetimeValue.substring(5,7)*1;//Month value
 				 var persiaDay =datetimeValue.substring(8,10)*1;//Day value
-				 
+
 				 persiaMonth -= 1;
-				 
+
 				 var julianDay = setJulianDay(pj(persiaYear > 0 ? persiaYear: persiaYear + 1, persiaMonth, persiaDay));
 				 julianDay.month = julianDay.month.toString().length==1?"0"+julianDay.month:julianDay.month;
 				 julianDay.day = julianDay.day.toString().length==1?"0"+julianDay.day:julianDay.day;
 				 return julianDay.year+"-"+julianDay.month+"-"+julianDay.day;
 			},
-			
+
 			fillHeader = function(type,text){
 				var headView = widget.find('.dateperiods-'+type);
 				if(type === 'years'){
@@ -560,12 +569,12 @@
 					headView.find('#itemclose').html('<button type="button" data-action="close" class="close" style="padding:0;">&times;</button> ');
 				}
 			},
-			
+
 			fillData = function(type, col){
 				var spans = [],
 					index = 0,
 					value;
-					
+
 				if(type === 'year'){
 					var p_today = calendarToPersianForString(new Date());
 					var currentYear = parseInt(p_today.split(" ")[0].split("-")[0]),
@@ -580,8 +589,23 @@
 						index++;
 					}
 				}else{
-					if(type!=='hundredth')
-						spans.push($('<span>').addClass('periods-span').html('<input id="'+type+'" type="checkbox" class="input-position"/>Check All'));
+          if(type === 'week'){
+            for (var i = 0; i < ponitWeeks.length; i++) {
+              if(ponitWeeks[i] === 'The last but one'){
+                spans.push($('<span>').addClass('lastweekbutx').html('<input type="radio" class="input-position" name="'+type+'" value="'+(i+1000)+'"/>'+ ponitWeeks[i]));
+              }else if(ponitWeeks[i] === 'The last'){
+                spans.push($('<span>').addClass('lastweek').html('<input type="radio" class="input-position" name="'+type+'" value="'+(i+1000)+'"/>'+ ponitWeeks[i]));
+              } else if(ponitWeeks[i] === 'Every'){
+                spans.push($('<span>').addClass('pointweek').html('<input id="weekEvery" type="radio" class="input-position" name="'+type+'" value="'+(i+100)+'" checked/>'+ ponitWeeks[i]));
+              }else{
+                spans.push($('<span>').addClass('pointweek').html('<input type="radio" class="input-position" name="'+type+'" value="'+(i+1000)+'"/>'+ ponitWeeks[i]));
+              }
+            }
+            spans.push($('<span>').attr('id', 'hint').addClass('periods periods-span').html('Please select the following week!'));
+          }
+					if(type!=='hundredth'){
+            spans.push($('<span>').addClass('periods-span').html('<input id="'+type+'" type="checkbox" class="input-position"/>Check All'));
+          }
 					while (index<col) {
 						if(type === 'month' || type === 'day'){
 							value = (index+1)<10?'0'+(index+1):(index+1);
@@ -597,71 +621,75 @@
 						}
 						index++;
 					}
+          if(type === 'day'){
+            spans.push($('<span>').addClass('pointday').html('<input type="checkbox" class="input-position" name="'+type+'" value="0xFD"/>0xFD'));
+            spans.push($('<span>').addClass('pointday').html('<input type="checkbox" class="input-position" name="'+type+'" value="0xFE"/>0xFE'));
+          }
 				}
 				return spans;
 			},
-	
+
 			fillYear = function(){
 				fillHeader('years','Year');
 				widget.find('.dateperiods-years').find('tbody').empty().append(fillData('year',30));
 				checkAll(widget.find('.dateperiods-years').find('#year'),'year');
 				checkWildcard(widget.find('.dateperiods-years').find('th').find('input'),'year');
 			},
-			
+
 			fillMonths = function () {
 				fillHeader('months','Month');
 				widget.find('.dateperiods-months td').empty().append(fillData('month',12));
 				checkAll(widget.find('.dateperiods-months').find('#month'),'month');
 				checkWildcard(widget.find('.dateperiods-months').find('th').find('input'),'month');
 			},
-			
+
 			fillDays = function () {
 				fillHeader('days','Day');
 				widget.find('.dateperiods-days td').empty().append(fillData('day',31));
 				checkAll(widget.find('.dateperiods-days').find('#day'),'day');
 				checkWildcard(widget.find('.dateperiods-days').find('th').find('input'),'day');
 			},
-			
+
 			fillWeeks = function () {
 				fillHeader('weeks','Week');
 				widget.find('.dateperiods-weeks td').empty().append(fillData('week',7));
 				checkAll(widget.find('.dateperiods-weeks').find('#week'),'week');
 				checkWildcard(widget.find('.dateperiods-weeks').find('th').find('input'),'week');
 			},
-			
+
 			fillHours = function () {
 				fillHeader('hours','Hour');
 				widget.find('.dateperiods-hours td').empty().append(fillData('hour',24));
 				checkAll(widget.find('.dateperiods-hours').find('#hour'),'hour');
 				checkWildcard(widget.find('.dateperiods-hours').find('th').find('input'),'hour');
 			},
-			
+
 			fillMinutes = function () {
 				fillHeader('minutes','Munite');
 				widget.find('.dateperiods-minutes td').empty().append(fillData('minute',60));
 				checkAll(widget.find('.dateperiods-minutes').find('#minute'),'minute');
 				checkWildcard(widget.find('.dateperiods-minutes').find('th').find('input'),'minute');
 			},
-			
+
 			fillSeconds = function () {
 				fillHeader('seconds','Second');
 				widget.find('.dateperiods-seconds td').empty().append(fillData('second',60));
 				checkAll(widget.find('.dateperiods-seconds').find('#second'),'second');
 				checkWildcard(widget.find('.dateperiods-seconds').find('th').find('input'),'second');
 			},
-			
+
 			fillHundredths = function () {
 				fillHeader('hundredths','Hundredth');
 				widget.find('.dateperiods-hundredths td').empty().append(fillData('hundredth',1));
 				checkAll(widget.find('.dateperiods-hundredths').find('#hundredth'),'hundredth');
 				checkWildcard(widget.find('.dateperiods-hundredths').find('th').find('input'),'hundredth');
 			},
-			
+
 			updateDays = function(){
 				if(!widget) return;
 				var m = [];
 				widget.find('.dateperiods-months td').find('input[name="month"]:checked').each(function(){
-					m.push(parseInt(this.value));								
+					m.push(parseInt(this.value));
 				});
 				if(m.indexOf(1)!=-1 || m.indexOf(2)!=-1 || m.indexOf(3)!=-1 || m.indexOf(4)!=-1 || m.indexOf(5)!=-1 || m.indexOf(6)!=-1){
 					widget.find('.dateperiods-days td').find('span').removeClass('span-dispaly');
@@ -675,7 +703,7 @@
 							widget.find('.dateperiods-days td').find('span:gt(29)').addClass('span-dispaly').prop('checked',false);
 							ychecked = false;
 							return;
-						}					
+						}
 					});
 					if(ychecked && widget.find('.dateperiods-years td').find('input[name="year"]:checked').length>0){
 						widget.find('.dateperiods-days td').find('span:gt(28)').addClass('span-dispaly').prop('checked',false);
@@ -686,7 +714,7 @@
 					widget.find('.dateperiods-days td').find('span').removeClass('span-dispaly');
 				}
 			},
-			
+
 			calWeekByYMD = function(str){
 				var datas = str.split(";"),result = '';
 				for(var i=0; i<datas.length; i++){
@@ -699,29 +727,49 @@
 				}
 				return result.substring(0,result.length-1);
 			},
-			
+
 			getFinalResult = function(temp){
-				var result = '';
+				var result = '', rstemp = '', lastSel = 0;
 				if(temp.length!==0){
 					var datas = temp.split(";");
+          if(widget.find('td').find('input[type="radio"][name="week"][id!="weekEvery"]:checked').length){
+            for(var i=0; i<datas.length; i++){
+    					var data = datas[i].split(",");
+    					if(data[0]=='0xFFFF' || data[1] == '0xFF'){
+                switch(parseInt(widget.find('td').find('input[type="radio"][name="week"]:checked').val())){
+                  case 1001:data[2] = "01";break;
+                  case 1002:data[2] = "08";break;
+                  case 1003:data[2] = "15";break;
+                  case 1004:data[2] = "22";break;
+                  case 1005:data[2] = "0xFD";break;
+                  case 1006:data[2] = "0xFE";break;
+                  defaut:break;
+                }
+    					}
+    					rstemp += data+ ";";
+    				}
+            rstemp = rstemp.substring(0,rstemp.length-1);
+            datas = [];
+            datas = rstemp.split(";");
+          }
+          for(var i=0; i<viewModes.length; i++){
+            var type = viewModes[i].substring(0,viewModes[i].length-1);
+            if(widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').length){
+              lastSel = i;
+            }
+          }
 					for(var i=0; i<datas.length; i++){
 						var data = datas[i].split(",");
 						var old = [].concat(data);
-						for(var j=0; j<old.length; j++){
-							if(old[j].indexOf('0xFF')==-1){
-								for(var k=j+1; k<old.length; k++){
-									if(old[k] == '0xFF' && widget.find('.dateperiods-'+viewModes[k]).find('th').find('input:checked').length<1){
-										if(viewModes[k] === 'months' || viewModes[k] === 'days'){
-											data[k] = '01';
-										}else if(viewModes[k] !== 'weeks'){
-											data[k] = '00';
-										}
-										
-									}
-								}
-								break;
-							}
-						}
+            for(var k=(lastSel+1); k<old.length; k++){
+              if(old[k] == '0xFF' && widget.find('.dateperiods-'+viewModes[k]).find('th').find('input:checked').length<1){
+                if(viewModes[k] === 'months' || viewModes[k] === 'days'){
+                  data[k] = '01';
+                }else if(viewModes[k] !== 'weeks'){
+                  data[k] = '00';
+                }
+              }
+            }
 						result += data+ ";";
 					}
 					result = result.substring(0,result.length-1);
@@ -730,25 +778,24 @@
 				}
 				return result;
 			},
-			
+
 			getConfirmDatas = function(){
 				if(!widget) return;
 				var multiType = '',result = '',len = 1;
 				//get maxchecked len and type
-				for(var i=0; i<viewModes.length; i++){
+        for(var i=0; i<viewModes.length; i++){
 					var type = viewModes[i].substring(0,viewModes[i].length-1);
-					if(widget.find('td').find('input[name="'+type+'"]:checked').length>1){
+					if(widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').length>1){
 						multiType = type;
-						len = widget.find('td').find('input[name="'+type+'"]:checked').length;
+						len = widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').length;
 						break;
 					}
 				}
-				
-				for(var j=0; j<len; j++){
+        for(var j=0; j<len; j++){
 					for(var k=0; k<viewModes.length; k++){
 						var type = viewModes[k].substring(0,viewModes[k].length-1);
 						if(type == multiType){
-							widget.find('td').find('input[name="'+type+'"]:checked').each(function(n){
+							widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').each(function(n){
 								if(j==n){
 									if(result == ''){
 										result = $(this).val();
@@ -762,14 +809,14 @@
 								}
 							});
 						}else{
-							if(widget.find('td').find('input[name="'+type+'"]:checked').length>0){
+							if(widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').length>0){
 								if(result == ''){
-									result = widget.find('td').find('input[name="'+type+'"]:checked').val();
+									result = widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').val();
 								}else{
 									if(type === 'year'){
-										result += widget.find('td').find('input[name="'+type+'"]:checked').val();
+										result += widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').val();
 									}else{
-										result += ','+widget.find('td').find('input[name="'+type+'"]:checked').val();
+										result += ','+widget.find('td').find('input[type="checkbox"][name="'+type+'"]:checked').val();
 									}
 								}
 							}else{
@@ -789,30 +836,63 @@
 				}
 				setValue(getFinalResult(calWeekByYMD(result.substring(0,result.length-1))));
 			},
-			
+
 			/********************************************************************************
-             *
-             * Widget UI interaction functions
-             *
-             ********************************************************************************/
-            actions = {
+       *
+       * Widget UI interaction functions
+       *
+       ********************************************************************************/
+      actions = {
 				confirm: function () {
 					getConfirmDatas();
 					hide();
 				},
-				nextward: function(e) {
+        nextward: function(e) {
 					switch($(e.target).parent().text()){
 						case 'Month': showMode(1);break;
 						case 'Day': showMode(2);break;
-						case 'Week': showMode(3);break;
-						case 'Hour': showMode(4);break;
+						case 'Week': widget.find('.dateperiods-weeks').find('#hint').hide();
+                        showMode(3);break;
+						case 'Hour': if(widget.find('td').find('input[name="week"][type="radio"][id!="weekEvery"]:checked').length &&
+                            widget.find('td').find('input[name="week"][type="checkbox"]:checked').length == 0){
+                           widget.find('.dateperiods-weeks').find('#hint').show();
+                           break;
+                         }else{
+                           showMode(4);break;
+                         }
 						case 'Minute': showMode(5);break;
 						case 'Second': showMode(6);break;
 						case 'Hundredth': showMode(7);break;
 						default: break;
 					}
 				},
-				backward:function(e){
+        backward:function(e){
+          //Return to remove the current panel options
+          if(currentViewMode > 0){
+              switch(currentViewMode){
+    						case 1: widget.find('.dateperiods-months').find("input").prop('checked', false);break;
+    						case 2: widget.find('.dateperiods-days').find("input").prop('checked', false);break;
+    						case 3: widget.find('.dateperiods-weeks').find("input").prop('checked', false);
+                        widget.find('.dateperiods-weeks').find("input[id='weekEvery']").prop('checked', true);
+                        widget.find('.dateperiods-weeks').find('#hint').hide();
+                        break;
+    						case 4: widget.find('.dateperiods-hours').find("input").prop('checked', false);break;
+    						case 5: widget.find('.dateperiods-minutes').find("input").prop('checked', false);break;
+    						case 6: widget.find('.dateperiods-seconds').find("input").prop('checked', false);break;
+    						case 7: widget.find('.dateperiods-hundredths').find("input").prop('checked', false);break;
+    						default: break;
+    					}
+          }
+          //Return to disable the check all
+          if(!options.singleSelection)
+            widget.find('td').find('span[class="periods-span"]').find("input").prop("disabled", false);
+          for(var i=0; i<viewModes.length; i++){
+  					var type = viewModes[i].substring(0,viewModes[i].length-1);
+  					if(widget.find('td').find('input[name="'+type+'"]:checked').length>1){
+  							disabledCheckAll(i);
+  					}
+  				}
+          //show the current panel
 					if(currentViewMode <= viewModes.indexOf(options.viewMode)){
 						if(viewModes.indexOf(options.viewMode) == 2)
 							currentViewMode = viewModes.indexOf(options.viewMode)+2;
@@ -821,7 +901,7 @@
 					}
 					switch(currentViewMode){
 						case 1: showMode(-1);break;
-						case 2: 
+						case 2:
 						case 3: showMode(1);break;
 						case 4: showMode(preViewMode);break;
 						case 5: showMode(4);break;
@@ -836,10 +916,10 @@
 					getConfirmDatas();
 				},
 				close: function(){
-					hide();	
+					hide();
 				}
             },
-			
+
 			doAction = function (e) {
                 if ($(e.currentTarget).is('.disabled')) {
                     return false;
@@ -847,7 +927,7 @@
                 actions[$(e.currentTarget).data('action')].apply(periods, arguments);
                 return false;
             },
-			
+
 			setValue = function (value) {
                 if (!value) {
 					input.val('');
@@ -868,7 +948,7 @@
 					});
 				}
             },
-			
+
 			hide = function () {
 				var transitioning = false;
 				if (!widget) {
@@ -889,27 +969,27 @@
 					component.toggleClass('active');
 				}
 				widget.hide();
-				
+
 				currentViewMode = Math.max(viewModes.indexOf(options.viewMode), minViewModeNumber);
-	
+
 				$(window).off('resize', place);
 				widget.off('click', '[data-action]');
 				widget.off('mousedown', false);
-	
+
 				widget.remove();
 				widget = false;
-	
+
 				notifyEvent({
 					type: 'dp.hide'
 				});
 				return periods;
             },
-			
+
 			show = function () {
 				if (input.prop('disabled')|| widget) {
 					return periods;
 				}
-				
+
 				if (input.val().trim().length !== 0){
 					setValue(input.val().trim());
 				} else if (options.defaultDate) {
@@ -917,7 +997,7 @@
 				}else {
 					setValue('0xFFFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF,0xFF');
 				}
-	
+
 				widget = getTemplate();
 
 				fillYear();
@@ -930,44 +1010,44 @@
 				fillHundredths();
 				limitMuilCheck();
 				showMode();
-	
+
 				$(window).on('resize', place);
 				widget.on('click', '[data-action]', doAction); // this handles clicks on the widget
 				widget.on('mousedown', false);
-	
+
 				if (component && component.hasClass('btn')) {
 					component.toggleClass('active');
 				}
 				widget.show();
 				place();
-	
+
 				if (!input.is(':focus')) {
 					input.focus();
 				}
-	
+
 				notifyEvent({
 					type: 'dp.show'
 				});
 				return periods;
             },
-			
+
 			toggle = function () {
                 return (widget ? hide() : show());
             },
-			
+
 			change = function (e) {
                var val = $(e.target).val().trim();
 				setValue(val);
 				e.stopImmediatePropagation();
 				return false;
             },
-			
+
 			keydown = function (e) {
                 if (e.keyCode === 27) { // allow escape to hide periods
                     hide();
                 }
             },
-			
+
 			attachDatePeriodsElementEvents = function () {
                 input.on({
                     'change': change,
@@ -984,7 +1064,7 @@
                     component.on('mousedown', false);
                 }
             },
-			
+
 			detachDatePeriodsElementEvents = function () {
                 input.off({
                     'change': change,
@@ -1001,12 +1081,12 @@
                     component.off('mousedown', false);
                 }
             },
-			
+
 			initFormatting = function () {
 				minViewModeNumber = 0;
 				currentViewMode = Math.max(minViewModeNumber, currentViewMode);
 			 };
-		  
+
 		/********************************************************************************
          *
          * Public API functions
@@ -1023,13 +1103,13 @@
             element.removeData('DateTimePeriods');
             element.removeData('date');
         };
-		 
+
 		periods.toggle = toggle;
 
         periods.show = show;
 
         periods.hide = hide;
-		 
+
 		periods.disable = function () {
             hide();
             if (component && component.hasClass('btn')) {
@@ -1038,7 +1118,7 @@
             input.prop('disabled', true);
             return periods;
         };
-		
+
 		periods.defaultDate = function (defaultDate) {
             if (arguments.length === 0) {
                 return options.defaultDate ? options.defaultDate.clone() : options.defaultDate;
@@ -1055,7 +1135,7 @@
             }
             return periods;
         };
-		
+
 		periods.singleSelection = function(singleSelection){
 			if (arguments.length === 0) {
                 return options.singleSelection;
@@ -1071,7 +1151,7 @@
             }
             return periods;
 		};
-		
+
 		periods.viewMode = function (newViewMode) {
             if (arguments.length === 0) {
                 return options.viewMode;
@@ -1091,7 +1171,7 @@
             showMode();
             return periods;
         };
-		
+
 		periods.toolbarPlacement = function (toolbarPlacement) {
             if (arguments.length === 0) {
                 return options.toolbarPlacement;
@@ -1111,7 +1191,7 @@
             }
             return periods;
         };
-		
+
 		periods.showClear = function (showClear) {
             if (arguments.length === 0) {
                 return options.showClear;
@@ -1128,7 +1208,7 @@
             }
             return periods;
         };
-		
+
 		periods.widgetPositioning = function (widgetPositioning) {
             if (arguments.length === 0) {
                 return $.extend({}, options.widgetPositioning);
@@ -1159,7 +1239,7 @@
             }
             return periods;
         };
-		
+
 		periods.options = function (newOptions) {
             if (arguments.length === 0) {
                 return $.extend(true, {}, options);
@@ -1178,7 +1258,7 @@
             });
             return periods;
         };
-		 
+
 		// initializing element and component attributes
         if (element.is('input')) {
             input = element;
@@ -1204,15 +1284,15 @@
         if (!input.is('input')) {
             throw new Error('Could not initialize DateTimePeriods without an input element');
         }
-		 
+
 		$.extend(true, options, dataToOptions());
-		
+
 		periods.options(options);
-		
+
 		initFormatting();
-		
+
 		attachDatePeriodsElementEvents();
-		
+
 		if (input.prop('disabled')) {
             periods.disable();
         }
@@ -1222,11 +1302,11 @@
         } else if (options.defaultDate) {
             setValue(options.defaultDate);
         }
-		
+
 		return periods;
 	};
-	
-	
+
+
 	/********************************************************************************
      *
      * jQuery plugin constructor and defaults object
@@ -1242,7 +1322,7 @@
             }
         });
     };
-	
+
 	$.fn.datetimeperiods.defaults = {
 		defaultDate: false,
 		singleSelection: false,
@@ -1254,5 +1334,5 @@
             vertical: 'auto'
         }
 	}
-	
+
 }));

@@ -273,7 +273,7 @@
 			},
 
 			checkOne = function(type,value){
-				widget.find('.dateperiods-'+type+'s').find('td').find("input[value!='"+value+"']:checked").prop("checked", false);
+				widget.find('.dateperiods-'+type+'s').find('td').find("input[type='checkbox'][value!='"+value+"']:checked").prop("checked", false);
 			},
 
 			disabledCheckAll = function(type){
@@ -752,7 +752,8 @@
     					}
           }
           //Return to disable the check all
-          widget.find('td').find('span[class="periods-span"]').find("input").prop("disabled", false);
+          if(!options.singleSelection)
+            widget.find('td').find('span[class="periods-span"]').find("input").prop("disabled", false);
           for(var i=0; i<viewModes.length; i++){
   					var type = viewModes[i].substring(0,viewModes[i].length-1);
   					if(widget.find('td').find('input[name="'+type+'"]:checked').length>1){
@@ -1191,7 +1192,7 @@
 
 	$.fn.datetimeperiods.defaults = {
 		defaultDate: false,
-		singleSelection: false,
+		singleSelection: true,
 		viewMode: 'years',
 		toolbarPlacement: 'default',
 		showClear: true,
