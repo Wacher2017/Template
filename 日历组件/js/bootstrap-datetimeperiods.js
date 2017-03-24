@@ -479,7 +479,7 @@
 						if(type === 'month' || type === 'day'){
 							value = (index+1)<10?'0'+(index+1):(index+1);
 						}else if(type === 'week'){
-							value = (index+1)==7?'0':(index+1);
+							value = index+1;
 						}else{
 							value = index<10?'0'+index:index;
 						}

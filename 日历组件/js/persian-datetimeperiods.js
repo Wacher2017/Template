@@ -56,7 +56,7 @@
 				forward: 'glyphicon glyphicon-forward',
 				clear: 'glyphicon glyphicon-trash'
 			},
-			shortWeeks = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+			shortWeeks = ['Sat','Sun','Mon','Tue','Wed','Thu','Fri'],
       ponitWeeks = ['Every','1st','2nd','3rd','4th','The last but one','The last'],
 			viewModes = ['years', 'months', 'days', 'weeks', 'hours', 'minutes', 'seconds', 'hundredths'],
 			verticalModes = ['top', 'bottom', 'auto'],
@@ -610,7 +610,7 @@
 						if(type === 'month' || type === 'day'){
 							value = (index+1)<10?'0'+(index+1):(index+1);
 						}else if(type === 'week'){
-							value = (index+1)==7?'0':(index+1);
+							value = index+1;
 						}else{
 							value = index<10?'0'+index:index;
 						}
