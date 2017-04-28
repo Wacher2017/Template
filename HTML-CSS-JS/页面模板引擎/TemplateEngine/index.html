@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="wacher">
+  <title>TemplateEngine</title>
+  <script type="text/javascript" src="js/jquery-1.12.3.js"></script>
+  <script type="text/javascript" src="js/template-engine.js"></script>
+  <script type="text/javascript">
+	$(function(){
+		var el = TemplateEngine(template, {
+			name: "Krasimir Tsonev",
+			profile: {
+				age: 29
+			},
+			skills: ["js", "html", "css"],
+			showSkills: true
+		});
+		$("body").append(el);
+	});
+  </script>
+ </head>
+ <body>
+
+ </body>
+</html>
