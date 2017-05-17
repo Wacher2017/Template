@@ -1,0 +1,24 @@
+<!doctype html>
+<html  lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="Author" content="wacher">
+    <title>JS前端缓存缓存对象封装实例</title>
+    <script type="text/javascript" src="js/jquery-1.12.3.js"></script>
+    <script type="text/javascript" src="js/cache-map.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        var req = {};
+        req.id = 5;
+        req.name = "wacher";
+        req.time = time();
+        //CacheMap.set("wc", req);
+
+        console.log(CacheMap.get("wc"));
+      });
+    </script>
+  </head>
+  <body>
+
+  </body>
+</html>
