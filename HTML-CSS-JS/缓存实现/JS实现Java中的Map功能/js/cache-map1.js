@@ -1,15 +1,18 @@
 /**
  * js实现java中的map功能，从而可以在前端作为缓存使用
- * 方法调用模式。 可以直接通过CacheMap去调用方法
+ * 构造器调用模式，必须示例化对象才能调用其方法
  */
-var CacheMap = {
-  _entrys: new Array(),
+var CacheMap = function(){
+  this._entrys = new Array();
+};
+
+CacheMap.prototype = {
   //存储map键值对， key的类型为String， value类型任意
   put: function(key, value) {
     if(key == null || key == undefined) {
       return false;
     }
-    var index = CacheMap._getIndex(key);
+    var index = this._getIndex(key);
     if(index == -1) {
       var entry = new Object();
       entry.key = key;
@@ -21,12 +24,12 @@ var CacheMap = {
   },
   //根据键名获取值
   get: function(key) {
-    var index = CacheMap._getIndex(key);
+    var index = this._getIndex(key);
     return (index != -1) ? this._entrys[index].value : null;
   },
   //移除指定键名的对象
   remove: function(key){
-    var index = CacheMap._getIndex(key);
+    var index = this._getIndex(key);
     if(index != -1) {
       this._entrys.splice(index, 1);
     }
@@ -37,7 +40,7 @@ var CacheMap = {
   },
   //对象是否包含指定键名
   contains: function(key) {
-    var index = CacheMap._getIndex(key);
+    var index = this._getIndex(key);
     return (index != -1) ? true : false;
   },
   //获取对象的长度，即保存对象的个数

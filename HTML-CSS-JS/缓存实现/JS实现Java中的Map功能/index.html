@@ -5,25 +5,26 @@
     <meta name="Author" content="wacher">
     <title>JS前端缓存缓存对象封装实例</title>
     <script type="text/javascript" src="js/jquery-1.12.3.js"></script>
-    <script type="text/javascript" src="js/cache-map.js"></script>
+    <script type="text/javascript" src="js/cache-map1.js"></script>
     <script type="text/javascript">
       $(function(){
-        CacheMap.put("wc1","000100100");
-        CacheMap.put("wc2","000111100");
-        CacheMap.put("wc3",{name:'ch1',age:20});
+        var cacheMap = new CacheMap();
+        cacheMap.put("wc1","000100100");
+        cacheMap.put("wc2","000111100");
+        cacheMap.put("wc3",{name:'ch1',age:20});
         console.log("-------------init------------------");
-        console.log(CacheMap.get("wc1"));
-        console.log(CacheMap.get("wc2"));
-        console.log(CacheMap.get("wc3"));
+        console.log(cacheMap.get("wc1"));
+        console.log(cacheMap.get("wc2"));
+        console.log(cacheMap.get("wc3"));
 
-        CacheMap.remove("wc2");
+        cacheMap.remove("wc2");
         console.log("-------------remove wc2------------------");
-        console.log(CacheMap.get("wc1"));
-        console.log(CacheMap.get("wc2"));
-        console.log(CacheMap.get("wc3").age);
+        console.log(cacheMap.get("wc1"));
+        console.log(cacheMap.get("wc2"));
+        console.log(cacheMap.get("wc3").age);
 
         console.log("-------------CacheMap length------------------");
-        console.log(CacheMap.getCount());
+        console.log(cacheMap.getCount());
 
       });
     </script>
