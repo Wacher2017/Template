@@ -1,0 +1,25 @@
+
+
+.body-box{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background:url("../bigbg01.png") #9E966E;
+    background-size: 100% 100%;
+}
+.time-box{
+    width: 720px;
+    height: 80px;
+    line-height: 80px;
+    margin: 250px auto;
+    color: #ffffff;
+    font-size: 25px;
+}
+#time{
+    width: 310px;
+    height: 80px;
+    line-height: 80px;
+    float: right;
+}

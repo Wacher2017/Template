@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!--引入css-->
+	<link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+    <!--引入js-->
+    <script src="js/jquery-1.11.3.js"></script>
+    <script src="js/index.js"></script>
+    <script>
+        $(function(){
+           tab();
+        });
+    </script>
+</head>
+<body>
+<!--tab标签页切换开始-->
+<div class="tab-box">
+    <ul class="tab-menu">
+        <li class="active js-tab01">标签页一</li>
+        <li class="js-tab02">标签页二</li>
+        <li  class="js-tab03">标签页三</li>
+        <li class="js-tab04">标签页四</li>
+        <li class="js-tab05">标签页五</li>
+    </ul>
+    <!--内容区域-->
+    <div class="tab-con">
+        <div class="tab01" style="background:red;">我是标签页一</div>
+        <div class="tab01 hide" style="background:#1BA261;">我是标签页二</div>
+        <div class="tab01  hide" style="background:#FFCE44;">我是标签页三</div>
+        <div class="tab01 hide" style="background:#75C544;">我是标签页四</div>
+        <div class="tab01 hide" style="background:#2287FE;">我是标签页五</div>
+    </div>
+</div>
+<!--tab标签页切换结束-->
+</body>
+</html>

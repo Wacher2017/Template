@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <!--引入css-->
+	<link rel="stylesheet" href="css/base.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
+
+</head>
+<body>
+<div class="body-box">
+        <!--倒计时开始-->
+        <div class="time-box">
+            距离江苏苏宁vs山东鲁能比赛还有:<div id="time"></div>
+        </div>
+        <!--倒计时结束-->
+</div>
+<!--引入js-->
+<script src="js/jquery-1.11.3.js"></script>
+<script>
+    $(function(){
+
+    });
+    //设定目标时间为
+    var Timeover = new Date("2017/5/14 19:35:00");
+    var DivTime=document.getElementById("time");
+    function times(){
+        //获取当前时间
+        var Timeout = new Date();
+        var s=Math.round((Timeover-Timeout)/1000);
+        if(s>=0){
+            var d=Math.floor(s/(3600*24));
+            d<10&&(d="0"+d);
+            //计算剩余小时h
+            var h=Math.floor(s/3600%24);
+            //如果h<10，就改为0+h
+            h<10&&
+            (h="0"+h);
+
+            //计算剩余时间m
+            var m=Math.floor(s/60%60);
+            //如果m<10,就改为0+m
+            m<10&&(m="0"+m);
+            //计算剩余s
+            s%=60;
+            //如果s<10,就改为0+s
+            s<10&&(s="0"+s);
+            DivTime.innerHTML=d+"天"+h+"时"+m+"分"+s+"秒";
+        }else{//否则
+            clearInterval(timer);
+            timer=null;
+            DivTime.innerHTML="0:0:0";
+        }
+    }
+    times();
+    var timer=setInterval(times,1000);
+</script>
+</body>
+</html>
