@@ -1,0 +1,78 @@
+<!DOCTYPE html>  
+<html>  
+	<head>  
+		<meta charset=utf-8" />  
+		<title>event多次触发</title>  
+		<style type="text/css">  
+			.out {  
+				float: left;
+				width:400px;  
+				height:30px;	
+				border:solid 1px #CCC;  
+			}  
+			.inner {
+				position: absolute;
+				width:400px;  
+				height:300px; 
+				top:40px;
+				left:8px;
+				display:none;		
+				border:solid 1px #555;
+				background-color:#ccc;		
+			}  
+			.show {
+				float: left;	
+				background:#EEE;  
+				width:200px;  
+				height:200px;  
+				padding:10px;  
+				margin-left:50px;  
+				border:solid 1px #F00;  
+			}  
+		</style>  
+		<script type="text/javascript" src="js/jquery-1.12.3.js"></script>  
+		<script type="text/javascript">  
+			$(function() {
+				/**
+				 * 【说明】实现div显示隐藏的功能,能看到点击次数
+				 * 【缺陷】当鼠标连续点击.inner的区域时，会出现其隐藏，不知道什么判断机制使代码执行了hover的鼠标移出操作。（唯一的不足，暂时没有理解透彻）
+				 */			
+				var num_c = 0;  //记录click事件触发次数  
+				var num_i = 0;  //记录hover（in）事件触发次数  
+				var num_o = 0;  //记录hover（out）事件触发次数  
+				var html = '';  //显示在.show中的信息  
+				$('.out').hover(function() {  
+					$(this).css('border' , 'solid 1px #F00');
+					$('.inner').slideDown(200);			
+					num_i += 1;  
+				} , function() {  
+					$(this).css('border' , 'solid 1px #CCC');  
+					num_o += 1;  
+					html += 'hover(in)触发次数为：' + num_i + '<br />';  
+					html += 'hover(out)触发次数为：' + num_o + '<br />';  
+					html += 'click触发次数为：' + num_c + '<br />';  
+					$('.show').html(html); 
+					$('.inner').slideUp(200);			
+					init();  
+				});  
+				$('.inner').click(function() {  
+					num_c += 1;  
+				});  
+		  
+				//初始化  
+				function init() {  
+					num_c = 0;  //记录click事件触发次数  
+					num_i = 0;  //记录hover（in）事件触发次数  
+					num_o = 0;  //记录hover（out）事件触发次数  
+					html = '';  //显示在.show中的信息  
+				}  
+			});  
+		</script>  
+	</head>  
+	<body>  
+		<div class="out">  
+			<div class="inner"></div>  
+		</div>  
+		<div class="show"></div>  
+	</body>  
+</html> 

@@ -1,0 +1,103 @@
+<!DOCTYPE html>  
+<html>  
+	<head>  
+		<meta charset=utf-8" />  
+		<title>mixhover</title>  
+		<style type="text/css">  
+			.out {  
+				float: left;
+				width:400px;  
+				height:30px;	
+				border:solid 1px #CCC;  
+			}  
+			.inner {
+				position: absolute;
+				width:400px;  
+				height:300px; 
+				top:40px;
+				left:8px;
+				display:none;		
+				border:solid 1px #555;
+				background-color:#ccc;		
+			}
+			.i1 {
+				left:410px;	
+			}	
+            .i2 {
+				left:812px;	
+			}			
+		</style>  
+		<script type="text/javascript" src="js/jquery-1.12.3.js"></script>
+        <script type="text/javascript" src="js/jquery.mixhover.js"></script>		
+		<script type="text/javascript">  
+			$(function() {
+				/**
+				 * 【说明】实现元素显示隐藏的功能（可以同时绑定多个）
+				 * 【缺陷】当鼠标连续点击.inner的区域时，会出现其隐藏，不知道什么判断机制使代码执行了hover的鼠标移出操作。（唯一的不足，暂时没有理解透彻）
+				 */	
+				/* $.mixhover( 
+					'#trigger', 
+					'#drop', 
+					function(trg, drop){
+						$(drop).show(); 
+					}, 
+					function(trg, drop){
+						$(drop).hide(); 
+					} 
+				) */
+				
+				/*$.mixhover( 
+					'#out1', 
+					'#inner1', 
+					function(trg, drop){
+						$(drop).show(); 
+					}, 
+					function(trg, drop){
+						$(drop).hide(); 
+					} 
+				)*/
+				
+				var out = new Array();
+				out.push($('#out1')[0]);
+				out.push($('#out2')[0]);
+				out.push($('#out3')[0]);
+				var inner = new Array();
+				inner.push($('#inner1')[0]);
+				inner.push($('#inner2')[0]);
+				inner.push($('#inner3')[0]);
+				$.mixhover( 
+					out, 
+					inner, 
+					function(trg, drop){
+						$(drop).show(); 
+					}, 
+					function(trg, drop){
+						$(drop).hide(); 
+					} 
+				)
+			});  
+		</script>  
+	</head>  
+	<body>  
+		<!--<ul id="#nav"> 
+			<li></li> 
+			<li></li> 
+			<li id="trigger">下拉菜单</li> 
+			<li></li> 
+		</ul>
+		
+		<ul id="drop"> 
+			<li>下拉项1</li> 
+			<li>下拉项2</li> 
+			<li>下拉项3</li> 
+		<ul>-->
+		<div id="out1" class="out"></div>
+		<div id="inner1" class="inner"></div>  
+		
+		<div id="out2" class="out"></div>
+		<div id="inner2" class="inner i1"></div>  
+		
+		<div id="out3" class="out"></div>
+		<div id="inner3" class="inner i2"></div>  
+	</body>  
+</html> 
