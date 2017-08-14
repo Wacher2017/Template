@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>loading</title>
+	<style type="text/css">
+		.loading-bg {
+			/*background: url(./images/loading.gif) no-repeat center;*/
+			width: 100%; 
+			height: 100%; 
+			left:0; 
+			top:0;/*FF IE7*/ 
+			min-width: 850px;
+			z-index:99999; 
+			position:fixed!important;/*FF IE7*/ 
+			position:absolute;/*IE6*/ 
+			_top: expression(eval(document.compatMode && 
+			document.compatMode=='CSS1Compat') ? 
+			documentElement.scrollTop + (document.documentElement.clientHeight-this.offsetHeight)/2 :/*IE6*/ 
+			document.body.scrollTop + (document.body.clientHeight - this.clientHeight)/2);/*IE5 IE5.5*/ 
+		}
+		.loading-border{
+			position: absolute;			
+		    top: 45%;
+		    left: 40%;
+		    width: 20%;
+		    height: 10%;
+		    background: #fdfbe6;
+			border: 1px solid #f8f1ae;
+		    border-radius: 10px 5px 10px 10px;
+		}
+		.loading-gif {
+			background: url(./images/loading.gif) no-repeat center;
+			width: 100%;
+    		height: 100%;
+		}
+		/*******正在加载图标右上角叉叉按钮********/
+		.loading-close-button {
+		  position: relative;
+		  right: 0em;
+		  top: -0em;
+		  float: right;
+		  font-size: 20px;
+		  font-weight: bold;
+		  border: 0px;
+		  border-radius: 5px;
+		  background: #c9caca;
+		  color: #3668db;
+		  opacity: 0.7;
+		  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+		  filter: alpha(opacity=70);
+		}
+		.loading-close-button:hover,
+		.loading-close-button:focus {
+		  text-decoration: none;
+		  cursor: pointer;
+		  opacity: 1;
+		  -ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+		  filter: alpha(opacity=100);
+		}
+	</style>
+	<script type="text/javascript" src="js/jquery-1.12.3.js" ></script>
+	<script type="text/javascript">
+		window.onload = function() {
+			var oBtn = document.getElementById('btn1');
+			oBtn.onclick = function() {
+				loading('show');
+			}
+		}
+		function loading(isShow,callback) {
+	    	if(isShow=='show'){
+	    		var oDiv =  $('<div>').attr('id', 'loadingId').addClass('loading-bg')
+	    				.append($('<div>').addClass('loading-border').append($('<button type="button">&times;</button>').addClass('loading-close-button').attr('role', 'button')).append($('<div>').addClass('loading-gif')));
+	    		oDiv.appendTo(top.$('body'));
+	        	oDiv.css('display','none');
+				oDiv.css('display','block');
+				oDiv.find('.loading-close-button').click(function(){
+		    		oDiv.css('display','none');
+		    		oDiv = '';
+		    		top.$('body>div[id="loadingId"]').remove();
+		    		if (!_.isFunction(callback)){
+		    			callback = null;
+		    		}else{
+		    			callback();
+		    		}
+		    	});
+			}
+			if(isShow=='hide'){
+				top.$('body>div[id="loadingId"]').css('display','none');
+	    		top.$('body>div[id="loadingId"]').remove();
+			}
+	    }
+	</script>
+</head>
+<body>
+	<input id="btn1" type="button" name="loading" value="Loading">
+	<!--<div id="loadingId" class="loading-bg">
+		<div class="loading-border">
+			<button type="button" class="loading-close-button" role="button">&times;</button>
+			<div class="loading-gif"></div>
+		</div>
+	</div>-->
+</body>
+</html>
