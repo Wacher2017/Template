@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Author" content="wacher">
+  <meta name="Keywords" content="search">
+  <meta name="Description" content="advance search">
+  <title>Search</title>
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css"/>
+  <script type="text/javascript" src="js/jquery-1.12.3.js"></script>
+  <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+  <script type="text/javascript">
+	$(function(){
+		//$('#initBtn').click();
+	});
+  </script>
+ </head>
+ <body>
+	<div class="container" style="width: 100%; background: #f9faf4;">
+		<div class="row clearfix" style="padding: 10px 0; height: 100vh;">
+			<div class="col-md-4 column">
+				<div class="row clearfix" style="display: none">
+					<div class="col-md-12 column">
+						<form action="http://news.sina.com.cn/" target="search-content">
+							<input id="initBtn" type="submit" class="btn btn-info btn-default active">
+						</form>
+					</div>
+				</div>
+				<div class="row clearfix" style="margin-bottom:10px;">
+					<div class="col-md-12 column">
+						<form action="http://www.baidu.com/baidu" target="search-content"> 
+							<div align="center"> 
+								<div class="input-group">
+									<span class="input-group-btn" style="padding: 0 10px 0 0;">
+										<input name="tn" type="hidden" value="baidu"> 
+										<a href="http://www.baidu.com/" target="search-content"> 
+											<img src="images/bd_1b.gif" alt="Baidu" align="bottom" border="0">
+										</a> 
+									</span>
+									<input type="text" name="word" class="form-control">
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-info btn-default active" value="搜索">
+									</span>
+								</div>
+							</div> 
+						</form>
+					</div>
+				</div>
+				<div class="row clearfix" style="margin-bottom:10px;">
+					<div class="col-md-12 column">
+						<form action="http://cn.bing.com/search" target="search-content"> 
+							<div align="center"> 
+								<div class="input-group">
+									<span class="input-group-btn" style="padding: 0 10px 0 0;">
+										<a href="http://cn.bing.com/" target="search-content"> 
+											<img src="images/by_1b.gif" alt="Bing" align="bottom" border="0">
+										</a> 
+									</span>
+									<input type="text" name="q" class="form-control">
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-info btn-default active" value="搜索">
+									</span>
+								</div>
+							</div> 
+						</form>
+					</div>
+				</div>
+				<div class="row clearfix" style="margin-bottom:10px;">
+					<div class="col-md-12 column">
+						<form action="http://www.google.com/search" target="search-content"> 
+							<div align="center"> 
+								<div class="input-group">
+									<span class="input-group-btn" style="padding: 0 10px 0 0;">
+										<a href="http://www.google.com/intl/zh-CN/" target="search-content"> 
+											<img src="images/gg_1b.gif" alt="Google" align="bottom" border="0">
+										</a> 
+									</span>
+									<input type="text" name="q" class="form-control">
+									<input type=hidden name=ie value=GB2312>
+									<input type=hidden name=oe value=GB2312>
+									<input type=hidden name=hl value=zh-CN>
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-info btn-default active" value="搜索">
+									</span>
+								</div>
+							</div> 
+						</form>
+					</div>
+				</div>
+				<div class="row clearfix" style="margin-bottom:10px;">
+					<div class="col-md-12 column">
+						<form action="http://www.sogou.com/tx" target="search-content"> 
+							<div align="center"> 
+								<div class="input-group">
+									<span class="input-group-btn" style="padding: 0 10px 0 0;">
+										<a href="http://www.sogou.com/" target="search-content"> 
+											<img src="images/sg_1b.gif" alt="Sogou" align="bottom" border="0">
+										</a> 
+									</span>
+									<input type="text" name="query" class="form-control">
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-info btn-default active" value="搜索">
+									</span>
+								</div>
+							</div> 
+						</form>
+					</div>
+				</div>
+				<div class="row clearfix" style="margin-bottom:10px;">
+					<div class="col-md-12 column">
+						<form action="http://www.youdao.com/search" target="search-content"> 
+							<div align="center"> 
+								<div class="input-group">
+									<span class="input-group-btn" style="padding: 0 10px 0 0;">
+										<a href="http://www.youdao.com/" target="search-content"> 
+											<img src="images/yd_1b.gif" alt="YouDao" align="bottom" border="0">
+										</a> 
+									</span>
+									<input type="text" name="q" class="form-control">
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-info btn-default active" value="搜索">
+									</span>
+								</div>
+							</div> 
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8 column" style="height: 100%;">
+				<iframe name="search-content" width="100%" height="100%" frameborder=0 marginheight=0 marginwidth=0></iframe>
+			</div>
+		</div>
+	</div>
+ </body>
+</html>
