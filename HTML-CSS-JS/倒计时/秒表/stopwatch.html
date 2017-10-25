@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>秒表</title>
+  <style>
+    #box {
+      height: 400px;
+      width: 400px;
+      background: #a9b3d5;
+      border: 8px double #ccc;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      border-radius: 50%;
+    }
+    #time {
+      background: #fff;
+      height: 100px;
+      width: 300px;
+      border-radius: 9px 9px;
+      position: absolute;
+      top: 110px;
+      left: 50px;
+      text-align: center;
+      line-height: 100px;
+      font-size: 50px;
+      font-family: Lucida Console;
+    }
+    .input {
+      width: 240px;
+      position: absolute;
+      bottom: 110px;
+      margin: 0 80px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .input .btn {
+      width: 70px;
+      height: 30px;
+    }
+  </style>
+  <script>
+    window.onload = function() {
+      var oBox = document.getElementById('time');
+      var oBtn1 = document.getElementById('btn1');
+      var oBtn2 = document.getElementById('btn2');
+      var oBtn3 = document.getElementById('btn3');
+      var num = 0, num1 = 0;
+      oBox.innerHTML = '00'+':'+'00'+':'+'00';
+      //开始按钮
+      oBtn1.onclick = function() {
+        num1++;
+        if(num1 == 1) {
+          function fn() {
+            num++;
+            var h = parseInt(num/60/60)>=10?parseInt(num/60/60):'0'+parseInt(num/60/60);
+            var m = parseInt(num/60)%60>=10?parseInt(num/60)%60:'0'+parseInt(num/60)%60;
+            var s = num%60>=10?num%60:'0'+num%60;
+            oBox.innerHTML = h+':'+m+':'+s;
+            time = setTimeout(fn, 10);
+            //暂停按钮
+            oBtn2.onclick = function() {
+              clearTimeout(time);
+              num1 = 0;
+            }
+            //清零按钮
+            oBtn3.onclick = function() {
+              clearTimeout(time);
+              num = 0;
+              num1 = 0;
+              oBox.innerHTML = '00'+':'+'00'+':'+'00';
+            }
+          }
+          fn();
+        }
+      }
+    }
+  </script>
+</head>
+<body>
+  <div id="box">
+    <div id="time"></div>
+    <form class="input">
+      <input type="button" name="btn1" id="btn1" class="btn" value="开始" />
+      <input type="button" name="btn2" id="btn2" class="btn" value="暂停" />
+      <input type="button" name="btn3" id="btn3" class="btn" value="清零" />
+    </form>
+  </div>
+</body>
+</html>
