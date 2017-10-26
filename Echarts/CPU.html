@@ -1,0 +1,435 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>CPU page</title>  
+<script src="js/jquery-1.12.3.js" type="text/javascript"></script> 
+<script src="js/echarts.js" type="text/javascript"></script>
+</head>
+
+<body>
+	 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->  
+    <div id="main" style="height:450px ; width: 95%;"></div>  
+  
+    <script type="text/javascript" >  
+        var myChart;  
+        var eCharts;  
+        var cpu_r = 100;  
+        var cpu_y= '85%';  
+        var cpu_title = '-25%';  
+        var cpu_detail =21;   
+		$(function(){
+			DrawEChart();
+		});
+        //创建ECharts图表方法  
+        function DrawEChart(ec) {  
+            eCharts = ec;  
+            myChart = echarts.init(document.getElementById('main'));  
+            myChart.showLoading({  
+                text : "图表数据正在努力加载...",  
+                effect :'whirling',//'spin' | 'bar' | 'ring' | 'whirling' | 'dynamicLine' | 'bubble'  
+                textStyle : {  
+                    fontSize : 20  
+                }  
+            });  
+              
+            //定义图表options  
+            var options = {  
+                backgroundColor: 'white',  
+                title : {  
+                    text : "最近10次CPU采样结果",  
+                    itemGap :270,  
+                    subtext : "当前CPU采样",  
+                    subtextStyle :{  
+                        fontSize: 15, fontWeight: 'bolder', color: '#333'  
+                    },  
+                    sublink : "http://www.baidu.com"  
+                },  
+                  
+                tooltip : {  
+                    trigger : 'axis'  
+                },  
+                legend : {  
+                    data : [ "空闲率","系统使用率","用户使用率","I/O等待率","告警阀值" ]  
+                },  
+                toolbox : {  
+                    show : true,  
+                    feature : {  
+                        //mark : {show : true},  
+                        //dataView : {show : true,readOnly : false},  
+                        magicType : {  
+                            show : true,type : [ 'line', 'bar' ]  
+                        },  
+                        //restore : {show : true},  
+                        saveAsImage : {  
+                            show : true  
+                        }  
+                    }  
+                },  
+                  
+                calculable : true,  
+                xAxis : [ {  
+                    type : 'category',  
+                    boundaryGap : false,  
+                    data : [ '第1次采样', '第2次采样', '第3次采样', '第4次采样', '第5次采样', '第6次采样', '第7次采样', '第8次采样', '第9次采样', '第10次采样' ]  
+                } ],  
+                  
+                yAxis : [ {  
+                    type : 'value',  
+                    axisLabel : {  
+                        formatter : '{value} %'  
+                    },  
+                    splitArea : {  
+                        show : true  
+                    }  
+                } ],  
+                  
+                grid : {  
+                        width : '90%' , //直角坐标轴占整页的百分比  
+                        height : '43%'  
+                        },  
+                          
+                series : [  
+                        {  
+                            name : '空闲率',  
+                            type : 'gauge',  
+                            center : [ '15%', cpu_y ],//圆心坐标，支持绝对值（px）和百分比  
+                            radius : cpu_r,  //仪表盘的半径  
+                            splitNumber : 10, // 分割段数，默认为5  
+                            axisLine : { // 坐标轴线  
+                                lineStyle : { // 属性lineStyle控制线条样式  
+                                    color : [ [ 0.2, '#ff4500' ],  
+                                            [ 0.8, '#48b' ], [ 1, '#228b22' ] ],  
+                                    width : 8  
+                                }  
+                            },  
+                            axisTick : { // 坐标轴小标记  
+                                splitNumber : 10, // 每份split细分多少段  
+                                length : 12, // 属性length控制线长  
+                                lineStyle : { // 属性lineStyle控制线条样式  
+                                    color : 'auto'  
+                                }  
+                            },  
+                            axisLabel : { // 坐标轴文本标签，详见axis.axisLabel  
+                                textStyle : { // 其余属性默认使用全局文本样式，详见TEXTSTYLE  
+                                    color : 'auto'  
+                                }  
+                            },  
+                            splitLine : { // 分隔线  
+                                show : true, // 默认显示，属性show控制显示与否  
+                                length : 30, // 属性length控制线长  
+                                lineStyle : { // 属性lineStyle（详见lineStyle）控制线条样式  
+                                    color : 'auto'  
+                                }  
+                            },  
+                            pointer : {  
+                                width : 5  
+                            },  
+                            title : {  
+                                show : true,  
+                                offsetCenter : [ 0, cpu_title ], // x, y，单位px  
+                                textStyle : { // 其余属性默认使用全局文本样式，详见TEXTSTYLE  
+                                    fontWeight : 'bolder',  
+                                    fontSize : 10  
+                                }  
+                            },  
+                            detail : {  
+                                formatter : '{value}%',  
+                                textStyle : { // 其余属性默认使用全局文本样式，详见TEXTSTYLE  
+                                    color : 'auto',  
+                                    fontWeight : 'bolder',  
+                                    fontSize : cpu_detail  
+                                }  
+                            },  
+                            data : [ {  
+                                value : 10,  
+                                name : '空闲率'  
+                            } ]  
+                        },  
+                        {  
+                            name : '系统使用率',  
+                            type : 'gauge',  
+                            center : [ '39%', cpu_y ],//圆心坐标，支持绝对值（px）和百分比  
+                            radius : cpu_r,  //仪表盘的半径  
+                            splitNumber : 10, // 分割段数，默认为5  
+                            axisLine : { // 坐标轴线  
+                                lineStyle : { // 属性lineStyle控制线条样式  
+                                    color : [ [ 0.2, '#228b22' ],  
+                                            [ 0.8, '#48b' ], [ 1, '#ff4500' ] ],  
+                                    width : 8  
+                                }  
+                            },  
+                            axisTick : { // 坐标轴小标记  
+                                splitNumber : 10, // 每份split细分多少段  
+                                length : 12, // 属性length控制线长  
+                                lineStyle : { // 属性lineStyle控制线条样式  
+                                    color : 'auto'  
+                                }  
+                            },  
+                            axisLabel : { // 坐标轴文本标签，详见axis.axisLabel  
+                                textStyle : { // 其余属性默认使用全局文本样式，详见TEXTSTYLE  
+                                    color : 'auto'  
+                                }  
+                            },  
+                            splitLine : { // 分隔线  
+                                show : true, // 默认显示，属性show控制显示与否  
+                                length : 30, // 属性length控制线长  
+                                lineStyle : { // 属性lineStyle（详见lineStyle）控制线条样式  
+                                    color : 'auto'  
+                                }  
+                            },  
+                            pointer : {  
+                                width : 5  
+                            },  
+                            title : {  
+                                show : true,  
+                                offsetCenter : [ 0, cpu_title ], // x, y，单位px  
+                                textStyle : { // 其余属性默认使用全局文本样式，详见TEXTSTYLE  
+                                    fontWeight : 'bolder',  
+                                    fontSize : 10  
+                                }  
+                            },  
+                            detail : {  
+                                formatter : '{value}%',  
+                                textStyle : { // 其余属性默认使用全局文本样式，详见TEXTSTYLE  
+                                    color : 'auto',  
+                                    fontWeight : 'bolder',  
+                                    fontSize : cpu_detail  
+                                }  
+                            },  
+                            data : [ {  
+                                value : 20,  
+                                name : '系统使用率'  
+                            } ]  
+                        },  
+                        {  
+                            name : '用户使用率',  
+                            type : 'gauge',  
+                            center : [ '62%', cpu_y ],//圆心坐标，支持绝对值（px）和百分比  
+                            radius : cpu_r,  //仪表盘的半径  
+                            splitNumber : 10, // 分割段数，默认为5  
+                            axisLine : { // 坐标轴线  
+                                lineStyle : { // 属性lineStyle控制线条样式  
+                                    color : [ [ 0.2, '#228b22' ],  
+                                            [ 0.8, '#48b' ], [ 1, '#ff4500' ] ],  
+                                    width : 8  
+                                }  
+                            },  
+                            axisTick : { // 坐标轴小标记  
+                                splitNumber : 10, // 每份split细分多少段  
+                                length : 12, // 属性length控制线长  
+                                lineStyle : { // 属性lineStyle控制线条样式  
+                                    color : 'auto'  
+                                }  
+                            },  
+                            axisLabel : { // 坐标轴文本标签，详见axis.axisLabel  
+                                textStyle : { // 其余属性默认使用全局文本样式，详见TEXTSTYLE  
+                                    color : 'auto'  
+                                }  
+                            },  
+                            splitLine : { // 分隔线  
+                                show : true, // 默认显示，属性show控制显示与否  
+                                length : 30, // 属性length控制线长  
+                                lineStyle : { // 属性lineStyle（详见lineStyle）控制线条样式  
+                                    color : 'auto'  
+                                }  
+                            },  
+                            pointer : {  
+                                width : 5  
+                            },  
+                            title : {  
+                                show : true,  
+                                offsetCenter : [ 0, cpu_title ], // x, y，单位px  
+                                textStyle : { // 其余属性默认使用全局文本样式，详见TEXTSTYLE  
+                                    fontWeight : 'bolder',  
+                                    fontSize : 10  
+                                }  
+                            },  
+                            detail : {  
+                                formatter : '{value}%',  
+                                textStyle : { // 其余属性默认使用全局文本样式，详见TEXTSTYLE  
+                                    color : 'auto',  
+                                    fontWeight : 'bolder',  
+                                    fontSize : cpu_detail  
+                                }  
+                            },  
+                            data : [ {  
+                                value : 40,  
+                                name : '用户使用率'  
+                            } ]  
+                        },  
+                        {  
+                            name : 'IO等待率',  
+                            type : 'gauge',  
+                            center : [ '85%', cpu_y ],//圆心坐标，支持绝对值（px）和百分比  
+                            radius : cpu_r,  //仪表盘的半径  
+                            splitNumber : 10, // 分割段数，默认为5  
+                            axisLine : { // 坐标轴线  
+                                lineStyle : { // 属性lineStyle控制线条样式  
+                                    color : [ [ 0.2, '#228b22' ],  
+                                            [ 0.8, '#48b' ], [ 1, '#ff4500' ] ],  
+                                    width : 8  
+                                }  
+                            },  
+                            axisTick : { // 坐标轴小标记  
+                                splitNumber : 10, // 每份split细分多少段  
+                                length : 12, // 属性length控制线长  
+                                lineStyle : { // 属性lineStyle控制线条样式  
+                                    color : 'auto'  
+                                }  
+                            },  
+                            axisLabel : { // 坐标轴文本标签，详见axis.axisLabel  
+                                textStyle : { // 其余属性默认使用全局文本样式，详见TEXTSTYLE  
+                                    color : 'auto',  
+                                    //fontSize : 12  
+                                }  
+                            },  
+                            splitLine : { // 分隔线  
+                                show : true, // 默认显示，属性show控制显示与否  
+                                length : 30, // 属性length控制线长  
+                                lineStyle : { // 属性lineStyle（详见lineStyle）控制线条样式  
+                                    color : 'auto'  
+                                }  
+                            },  
+                            pointer : {  
+                                width : 5  
+                            },  
+                            title : {  
+                                show : true,  
+                                offsetCenter : [ 0, cpu_title ], // x, y，单位px  
+                                textStyle : { // 其余属性默认使用全局文本样式，详见TEXTSTYLE  
+                                    fontWeight : 'bolder',  
+                                    fontSize : 10  
+                                }  
+                            },  
+                            detail : {  
+                                formatter : '{value}%',  
+                                textStyle : { // 其余属性默认使用全局文本样式，详见TEXTSTYLE  
+                                    color : 'auto',  
+                                    fontWeight : 'bolder',  
+                                    fontSize : cpu_detail  
+                                }  
+                            },  
+                            data : [ {  
+                                value : 70,  
+                                name : 'I/O等待率'  
+                            } ]  
+                        }, 
+                        {  
+                            name : '空闲率',  
+                            type : 'line',  
+                            data : [ 21, 22, 23, 27, 25, 28, 31 ,25, 25, 25],//必须是Integer类型的,String计算平均值会出错  
+                            markPoint : {  
+                                data : [ {  
+                                    type : 'max',  
+                                    name : '最大值'  
+                                }, {  
+                                    type : 'min',  
+                                    name : '最小值'  
+                                } ]  
+                            },  
+                            //markLine : {  
+                                //data : [ {  
+                                //  type : 'average',  
+                                //  name : '平均值'  
+                                //} ]  
+                            //}  
+                        } ,  
+                        {  
+                            name : '系统使用率',  
+                            type : 'line',  
+                            data : [ 13, 12, 13, 11, 14, 18, 21 , 14, 14, 14  ],//必须是Integer类型的,String计算平均值会出错  
+                            markPoint : {  
+                                data : [ {  
+                                    type : 'max',  
+                                    name : '最大值'  
+                                }, {  
+                                    type : 'min',  
+                                    name : '最小值'  
+                                } ]  
+                            }  
+                        } ,       
+                        {  
+                            name : '用户使用率',  
+                            type : 'line',  
+                            data : [ 32, 33, 32, 31, 32, 38, 21 , 32, 32, 32 ],//必须是Integer类型的,String计算平均值会出错  
+                            markPoint : {  
+                                data : [ {  
+                                    type : 'max',  
+                                    name : '最大值'  
+                                }, {  
+                                    type : 'min',  
+                                    name : '最小值'  
+                                } ]  
+                            }  
+                        } ,  
+                        {  
+                            name : 'I/O等待率',  
+                            type : 'line',  
+                            data : [ 22, 21, 23, 24, 25, 22, 11, 22, 22, 22 ],//必须是Integer类型的,String计算平均值会出错  
+                            markPoint : {  
+                                data : [ {  
+                                    type : 'max',  
+                                    name : '最大值'  
+                                }, {  
+                                    type : 'min',  
+                                    name : '最小值'  
+                                } ]  
+                            }  
+                        } ,  
+                        {  
+                            name : '告警阀值',  
+                            type : 'line',  
+                            itemStyle: {  
+                                normal: {  
+                                    color: 'red',  
+                                    lineStyle: {width: 5}  
+                                }  
+                        },  
+                            data : [ 70, 70, 70, 70,70, 70, 70, 70,70, 70 ]//必须是Integer类型的,String计算平均值会出错  
+                              
+                        }   
+                ]  
+            };  
+              
+            //clearTimeout(loadingTicket);  
+            //loadingTicket = setTimeout(function (){  
+                myChart.setOption(options);  
+                myChart.hideLoading();  
+            //},100);
+        }  
+    </script>  
+</body>
+</html>
+
+
+<!--
+<script type="text/javascript">  
+	function getChartData() {  
+		//获得图表的options对象  
+		var options = myChart.getOption();  
+		//通过Ajax获取数据  
+		$.ajax({  
+			type : "post",  
+			async : false, //同步执行  
+			url : "${pageContext.request.contextPath}/echarts/line_data",  
+			data : {},  
+			dataType : "json", //返回数据形式为json  
+			success : function(result) {  
+				if (result) {  
+					options.legend.data = result.legend;  
+					options.xAxis[0].data = result.category;  
+					options.series[0].data = result.series[0].data;  
+
+					myChart.hideLoading();  
+					myChart.setOption(options);  
+				}  
+			},  
+			error : function(errorMsg) {  
+				alert("不好意思，大爷，图表请求数据失败啦!");  
+				myChart.hideLoading();  
+			}  
+		});  
+	}  
+</script> 
+-->

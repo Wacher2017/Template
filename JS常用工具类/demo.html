@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>常用组件</title>
+	<style>
+	 .wid {
+	 	width:216px;
+	 }
+	</style>
+	<script src="js/jquery-1.12.3.js" type="text/javascript"></script>
+	<script src="js/utils.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(function(){
+			/*********************日期*******************************/
+			var date = dateUtils.curDateTime();
+			$('#cdBtn').on('click',function(){
+				$('#cd').val(date);
+			});
+			$('#dfBtn').on('click',function(){
+				$('#df').val(date.dateFormat('yyyy-MM-dd hh:mm:ss'));
+			});
+			$('#gyBtn').on('click',function(){
+				var gy = $('#gy').val();
+				var d = dateUtils.strTurnDate(gy);
+				$('#gy').val(dateUtils.getYear(d));
+			});
+			$('#gmBtn').on('click',function(){
+				var gm = $('#gm').val();
+				var d = dateUtils.strTurnDate(gm);
+				$('#gm').val(dateUtils.getMonth(d));
+			});
+			$('#gdBtn').on('click',function(){
+				var gd = $('#gd').val();
+				var d = dateUtils.strTurnDate(gd);
+				$('#gd').val(dateUtils.getDay(d));
+			});
+			$('#ghBtn').on('click',function(){
+				var gh = $('#gh').val();
+				var d = dateUtils.strTurnDate(gh);
+				$('#gh').val(dateUtils.getHour(d));
+			});
+			$('#gmmBtn').on('click',function(){
+				var gmm = $('#gmm').val();
+				var d = dateUtils.strTurnDate(gmm);
+				$('#gmm').val(dateUtils.getMinute(d));
+			});
+			$('#gsBtn').on('click',function(){
+				var gs = $('#gs').val();
+				var d = dateUtils.strTurnDate(gs);
+				$('#gs').val(dateUtils.getSecond(d));
+			});
+			$('#isleapyearBtn').on('click',function(){
+				var isleapyear = $('#isleapyear').val();
+				var d = dateUtils.strTurnDate(isleapyear);
+				$('#isleapyear').val(dateUtils.isLeapYear(d));
+			});
+			$('#mmdBtn').on('click',function(){
+				var mmd = $('#mmd').val();
+				var d = dateUtils.strTurnDate(mmd);
+				$('#mmd').val(dateUtils.getMaxDaysByMonth(d));
+			});
+			$('#gwBtn').on('click',function(){
+				var gw = $('#gw').val();
+				var d = dateUtils.strTurnDate(gw);
+				$('#gw').val(dateUtils.getWeek(d));
+			});
+			$('#stdBtn').on('click',function(){
+				var std = $('#std').val();
+				var d = dateUtils.strTurnDate(std);
+				$('#std').val(dateUtils.getWeek(d));
+			});
+			$('#ddBtn').on('click',function(){
+				var d1 = dateUtils.strTurnDate($('#dd1').val());
+				var d2 = dateUtils.strTurnDate($('#dd2').val());
+				$('#dd3').val(dateUtils.dayMinus(d1,d2));
+			});
+			/*********************字符串*******************************/
+			$('#isEmptyBtn').on('click',function(){
+				$('#isEmpty').val(strUtils.isEmpty($('#isEmpty').val()));
+			});
+			$('#isEqualsBtn').on('click',function(){
+				$('#isEquals').val(strUtils.isEquals($('#isEquals').val(),'abc'));
+			});
+			$('#isEqualsIgnorecaseBtn').on('click',function(){
+				$('#isEqualsIgnorecase').val(strUtils.isEqualsIgnorecase($('#isEqualsIgnorecase').val(),'Abc'));
+			});
+			$('#isNumBtn').on('click',function(){
+				$('#isNum').val(strUtils.isNum($('#isNum').val()));
+			});
+			$('#isChineseBtn').on('click',function(){
+				$('#isChinese').val(strUtils.isChinese($('#isChinese').val()));
+			});
+			$('#isValidateMinColsBtn').on('click',function(){
+				$('#isValidateMinCols').val(strUtils.isValidateMinCols($('#isValidateMinCols').val(),5));
+			});
+			$('#isValidateMaxColsBtn').on('click',function(){
+				$('#isValidateMaxCols').val(strUtils.isValidateMaxCols($('#isValidateMaxCols').val(),5));
+			});
+			$('#isValidateRangeColsBtn').on('click',function(){
+				$('#isValidateRangeCols').val(strUtils.isValidateRangeCols($('#isValidateRangeCols').val(),5,10));
+			});
+			$('#trimLeftBtn').on('click',function(){
+				$('#trimLeft').val(strUtils.trimLeft($('#trimLeft').val()));
+			});
+			$('#trimRightBtn').on('click',function(){
+				$('#trimRight').val(strUtils.trimRight($('#trimRight').val()));
+			});
+			$('#trimBtn').on('click',function(){
+				$('#trim').val(strUtils.trim($('#trim').val()));
+			});
+			
+			$('#ajaxReadBtn').on('click',function(){
+				loadUtils.ajax('a.txt',function(str){
+					$('#ajaxRead').val(str);
+				},function(status){
+					$('#ajaxRead').val(status);
+				});
+				
+			});
+		});
+	</script>
+</head>
+	
+<body>
+	<table border="1px" align="center" cellspacing="0">
+		<thead>
+			<tr>
+				<th colspan="8">js常用工具类demo</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>当前日期时间</td>
+				<td class="wid"><input id="cd" type="text" value=""/><button id="cdBtn">获取</button></td>
+				<td>获取年</td>
+				<td class="wid"><input id="gy" type="text" value="" placeholder="yyyy-MM-dd or yyyy-MM-dd hh:mm:ss"/><button id="gyBtn">获取</button></td>
+				<td>获取月</td>
+				<td class="wid"><input id="gm" type="text" value="" placeholder="yyyy-MM-dd or yyyy-MM-dd hh:mm:ss"/><button id="gmBtn">获取</button></td>
+				<td>获取日</td>
+				<td class="wid"><input id="gd" type="text" value="" placeholder="yyyy-MM-dd or yyyy-MM-dd hh:mm:ss"/><button id="gdBtn">获取</button></td>
+			</tr>
+			<tr>
+				<td>日期格式化</td>
+				<td class="wid"><input id="df" type="text" value="" placeholder="yyyy-MM-dd or yyyy-MM-dd hh:mm:ss"/><button id="dfBtn">获取</button></td>
+				<td>获取小时</td>
+				<td class="wid"><input id="gh" type="text" value="" placeholder="yyyy-MM-dd or yyyy-MM-dd hh:mm:ss"/><button id="ghBtn">获取</button></td>
+				<td>获取分钟</td>
+				<td class="wid"><input id="gmm" type="text" value="" placeholder="yyyy-MM-dd or yyyy-MM-dd hh:mm:ss"/><button id="gmmBtn">获取</button></td>
+				<td>获取秒</td>
+				<td class="wid"><input id="gs" type="text" value="" placeholder="yyyy-MM-dd or yyyy-MM-dd hh:mm:ss"/><button id="gsBtn">获取</button></td>
+			</tr>
+			<tr>
+				<td>是否为闰年</td>
+				<td class="wid"><input id="isleapyear" type="text" value="" placeholder="yyyy-MM-dd or yyyy-MM-dd hh:mm:ss"/><button id="isleapyearBtn">获取</button></td>
+				<td>月的最大天数</td>
+				<td class="wid"><input id="mmd" type="text" value="" placeholder="yyyy-MM-dd or yyyy-MM-dd hh:mm:ss"/><button id="mmdBtn">获取</button></td>
+				<td>获取星期</td>
+				<td class="wid"><input id="gw" type="text" value="" placeholder="yyyy-MM-dd or yyyy-MM-dd hh:mm:ss"/><button id="gwBtn">获取</button></td>
+				<td>字符串转日期</td>
+				<td class="wid"><input id="std" type="text" value="" placeholder="yyyy-MM-dd or yyyy-MM-dd hh:mm:ss"/><button id="stdBtn">获取</button></td>
+			</tr>
+			<tr>
+				<td>计算日期差</td>
+				<td class="wid">
+					<input id="dd1" type="text" value="" placeholder="yyyy-MM-dd or yyyy-MM-dd hh:mm:ss" style="float: left;width:70px"/>
+					<input id="dd2" type="text" value="" placeholder="yyyy-MM-dd or yyyy-MM-dd hh:mm:ss" style="float: left;width:70px"/>
+					<input id="dd3" type="text" value="" style="float: left;width:20px"/>
+					<button id="ddBtn">获取</button>
+				</td>
+				<td>字符串是否为空</td>
+				<td class="wid"><input id="isEmpty" type="text" value=""/><button id="isEmptyBtn">获取</button></td>
+				<td>字符串是否相同</td>
+				<td class="wid"><input id="isEquals" type="text" value=""/><button id="isEqualsBtn">获取</button></td>
+				<td>忽略大小写判断字符串是否相同</td>
+				<td class="wid"><input id="isEqualsIgnorecase" type="text" value=""/><button id="isEqualsIgnorecaseBtn">获取</button></td>
+			</tr>
+			<tr>
+				<td>字符串是否是数字</td>
+				<td class="wid"><input id="isNum" type="text" value=""/><button id="isNumBtn">获取</button></td>
+				<td>字符串是否是中文</td>
+				<td class="wid"><input id="isChinese" type="text" value=""/><button id="isChineseBtn">获取</button></td>
+				<td>字符串len>=min</td>
+				<td class="wid"><input id="isValidateMinCols" type="text" value=""/><button id="isValidateMinColsBtn">获取</button></td>
+				<td>字符串len<=max</td>
+				<td class="wid"><input id="isValidateMaxCols" type="text" value=""/><button id="isValidateMaxColsBtn">获取</button></td>
+			</tr>
+			<tr>
+				<td>min<=字符串len<=max</td>
+				<td class="wid"><input id="isValidateRangeCols" type="text" value=""/><button id="isValidateRangeColsBtn">获取</button></td>
+				<td>去字符串前空格</td>
+				<td class="wid"><input id="trimLeft" type="text" value=""/><button id="trimLeftBtn">获取</button></td>
+				<td>去字符串后空格</td>
+				<td class="wid"><input id="trimRight" type="text" value=""/><button id="trimRightBtn">获取</button></td>
+				<td>去字符串前后空格</td>
+				<td class="wid"><input id="trim" type="text" value=""/><button id="trimBtn">获取</button></td>
+			</tr>
+			<tr>
+				<td>ajax读取文件</td>
+				<td><input id="ajaxRead" type="text" value=""/><button id="ajaxReadBtn">读取</button></td>
+				<td>cccccc</td>
+				<td>cccccc</td>
+				<td>cccccc</td>
+				<td>cccccc</td>
+				<td>dddddd</td>
+				<td>dddddd</td
+			</tr>
+			<tr>
+				<td>dddddd</td>
+				<td>dddddd</td>
+				<td>dddddd</td>
+				<td>ffffff</td>
+				<td>ffffff</td>
+				<td>ffffff</td>
+				<td>dddddd</td>
+				<td>dddddd</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

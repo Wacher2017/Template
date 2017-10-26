@@ -1,0 +1,240 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="description" content="underscore">
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Underscore Demo</title>
+<link rel="alternate" type="application/rss+xml" title="" href="feed/index.html">
+<link href="http://fonts.googleapis.com/css?family=Raleway:700,300" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/prettify.css">
+</head>
+<body>
+<div class="wrapper">
+<header>
+  <div class="container">
+    <h2 class="lone-header">Underscore Demo</h2>
+  </div>
+</header>
+<section>
+  <div class="container">
+    <ul class="docs-nav">
+      <li><strong>介绍(Introduction)</strong></li>
+      <li><a href="#summary" class="cc-active">概述</a></li>
+      <li class="separator"></li>
+      <li><strong>集合(Collection)</strong></li>
+      <li><a href="#view_each" class="cc-active">each</a></li>
+      <li><a href="#view_map" class="cc-active">map</a></li>
+      <li><a href="#view_reduce" class="cc-active">reduce</a></li>
+      <li><a href="#view_reduceRight" class="cc-active">reduceRight</a></li>
+      <li><a href="#view_find" class="cc-active">find</a></li>
+      <li><a href="#view_filter" class="cc-active">filter</a></li>
+      <li><a href="#view_where" class="cc-active">where</a></li>
+      <li><a href="#view_findWhere" class="cc-active">findWhere</a></li>
+      <li><a href="#view_reject" class="cc-active">reject</a></li>
+	    <li class="separator"></li>
+	    <li><strong>数组(Arrays)</strong></li>
+      <li><a href="#view_first" class="cc-active">first</a></li>
+      <li><a href="#view_initial" class="cc-active">initial</a></li>
+      <li><a href="#view_last" class="cc-active">last</a></li>
+    </ul>
+    <div class="docs-content">
+      <h2> 介绍（Introduction）</h2>
+      <h3 id="summary"> 概述</h3>
+      <p> Underscore是一个JavaScript实用库，提供了一整套函数式编程的实用功能，但是没有扩展任何JavaScript内置对象。</p>
+      <p> Underscor.js定义了一个下划线（_）对象，函数库的所有方法都属于这个对象。这些方法大致上可以分成：集合（collection）、数组（array）、函数（function）、对象（object）和工具（utility）五大类。 </p>
+	    <p> Underscore提供了100多个函数,包括常用的: map, filter, invoke — 当然还有更多专业的辅助函数,如:函数绑定, JavaScript模板功能,创建快速索引, 强类型相等测试, 等等.</p>
+      <p> 这里以Underscore.js (1.8.3)版本的API为参考，进行一些函数实例应用的描述。</p>
+      <hr>
+      <h2> 集合(Collection)</h2>
+      <h3 id="view_each"> each</h3>
+      <ul>
+        <li>_.each(list, iteratee, [context]) &nbsp;&nbsp;&nbsp;&nbsp;<i>Alias: <strong>forEach</strong></i></li>
+      </ul>
+      <p>
+         说明：遍历<strong>list</strong>中的所有元素，按顺序用遍历输出每个元素。
+   		   如果传递了<strong>context</strong>参数，则把<strong>iteratee</strong>绑定到<strong>context</strong>对象上。
+   		   每次调用<strong>iteratee</strong>都会传递三个参数：(element, index, list)。
+   		   如果<strong>list</strong>是个JavaScript对象，<strong>iteratee</strong>的参数是 (value, key, list))。
+   		   返回<strong>list</strong>以方便链式调用。<br />
+   		   注：如果存在原生的<strong>forEach</strong>方法，Underscore就使用它代替
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+    var arr = [1,2,3];
+    var json = {one: 1, two: 2, three: 3};
+    _.each(arr, function(value, key, list){
+      console.log("value:" + value);//值
+      console.log("key:" + key); //数组下标，json的key
+      console.log("list:" + list);//源list
+    });
+    _.each(json, function(value, key, list){
+      console.log("value:" + value);//值
+      console.log("key:" + key); //数组下标，json的key
+      console.log("list:" + list);//源list
+    });
+&lt;/script&gt;</pre>
+        <button id="each_btn" class="btn btn-position"> 执行</button>
+        <pre id="each_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_map"> map</h3>
+      <ul>
+        <li>_.map(list, iteratee, [context]) &nbsp;&nbsp;&nbsp;&nbsp;<i>Alias: <strong>collect</strong></i></li>
+      </ul>
+      <p>
+        说明：通过转换函数(<strong>iteratee</strong>迭代器)映射列表中的每个值产生价值的新数组。
+   		  iteratee传递三个参数：value，然后是迭代 index(或 key 如果<strong>list</strong>是个JavaScript对象是，这个参数就是key)，最后一个是引用指向整个<strong>list</strong>。<br />
+   		  与_.each()区别:<br />
+   		  其中一个重要的区别是，each返回的是原来的数组，并不会新创建一个数组。
+   		  而map方法会返回一个新的数组。如果在没有必要的情况下使用map，则有可能造成内存浪费。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+    var arr = [1,2,3];
+    var json = {one: 1, two: 2, three: 3};
+    _.map(json, function(value, key, list){
+      console.log("value" + value);//值
+      console.log("key" + key); //数组下标，json的key
+      console.log("list" + list);//源list
+    });
+    console.log(_.map(arr, function(num){ return num * 3; }));
+    console.log(_.map(json, function(num, key){ return num * 3; }));
+    console.log(_.map([[1, 2], [3, 4]], _.first));
+&lt;/script&gt;</pre>
+        <button id="map_btn" class="btn btn-position"> 执行</button>
+        <pre id="map_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_reduce"> reduce</h3>
+      <ul>
+        <li>_.reduce(list, iteratee, [memo], [context]) &nbsp;&nbsp;&nbsp;&nbsp;<i>Alias: <strong>inject, foldl</strong></i></li>
+      </ul>
+      <p>
+        说明：<strong>reduce</strong>方法把<strong>list</strong>中元素归结为一个单独的数值。<br />对数组中的所有元素调用指定的回调函数，该回调函数的返回值为累积结果。
+             <strong>Memo</strong>是<strong>reduce</strong>函数的初始值，<strong>reduce</strong>的每一步都需要由<strong>iteratee</strong>返回。<br />
+             这个迭代传递4个参数：<strong>memo</strong>,<strong>value</strong> 和 迭代的<strong>index</strong>（或者 <strong>key</strong>）和最后一个引用的整个<strong>list</strong>。<br />
+             如果没有<strong>memo</strong>传递给<strong>reduce</strong>的初始调用，<strong>iteratee</strong>不会被列表中的第一个元素调用。<br />
+             第一个元素将取代 传递给列表中下一个元素调用<strong>iteratee</strong>的<strong>memo</strong>参数。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+    var arr = [1, 2, 3];
+    _.reduce(arr, function(memo, value, index, list) { //memo是设置一个初始值,element是数组值,index是值在数组位置,list是整个数组
+      console.log("memo:" + memo); //初始值
+      console.log("value:" + value); //元素值
+      console.log("index:" + index); //数组下标值
+      console.log("list:" + list); //源list
+    }, 1); //注意1就是参数memo
+
+    var sum = _.reduce(arr, function(memo, num){ return memo + num; }, 0);
+    console.log("sum:" + sum);
+
+    var result = _.reduce(arr, function(memo, num){
+      console.log("memo:" + memo);
+      console.log("num:" + num);
+      return memo + num;
+    }, 3);
+    console.log(result);
+&lt;/script&gt;</pre>
+        <button id="reduce_btn" class="btn btn-position"> 执行</button>
+        <pre id="reduce_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_reduceRight"> reduceRight</h3>
+      <ul>
+        <li>_.reduceRight(list, iteratee, memo, [context]) &nbsp;&nbsp;&nbsp;&nbsp;<i>Alias: <strong>foldr</strong></i></li>
+      </ul>
+      <p>
+        说明：<strong>reducRight</strong>是从右侧开始组合的元素的<strong>reduce</strong>函数，如果存在JavaScript 1.8版本的<strong>reduceRight</strong>，则用其代替。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+    var arr = [1, 2, 3];
+    _.reduceRight(arr, function(memo, value, index, list) { //memo是设置一个初始值,element是数组值,index是值在数组位置,list是整个数组
+      console.log("memo:" + memo); //初始值
+      console.log("value:" + value); //元素值
+      console.log("index:" + index); //数组下标值
+      console.log("list:" + list); //源list
+    }, 1); //注意1就是参数memo
+
+    var sum = _.reduceRight(arr, function(memo, num){ return memo + num; }, 0);
+    console.log("sum:" + sum);
+&lt;/script&gt;</pre>
+        <button id="reduceRight_btn" class="btn btn-position"> 执行</button>
+        <pre id="reduceRight_console" class="prettyprint"></pre>
+      </div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="">
+    <p> &copy; Copyright Wacher. All Rights Reserved.</p>
+  </div>
+</footer>
+</div>
+<script type="text/javascript" src="js/jquery-1.12.3.js"></script>
+<script type="text/javascript" src="js/prettify/prettify.js"></script>
+<script src="https://cdn.bootcss.com/prettify/r298/run_prettify.js"></script>
+<script type="text/javascript" src="js/underscore.js"></script>
+<script type="text/javascript" src="js/layout.js"></script>
+<script type="text/javascript">
+  $(function() {
+    //each
+    $("#each_btn").on('click', function() {
+      var arr = [1,2,3];
+      var json = {one: 1, two: 2, three: 3};
+      var contexts = '';
+      _.each(arr, function(value, key, list){
+        contexts = 'value:'+value+'<br/>'+'key:'+key+'<br/>'+'list:'+list+'<br/>';
+      });
+      _.each(json, function(value, key, list){
+        contexts += '<br/>value:'+value+'<br/>'+'key:'+key+'<br/>'+'list:'+list;
+      });
+      $("#each_console").html(contexts);
+    });
+    //map
+    $("#map_btn").on('click', function() {
+      var arr = [1,2,3];
+      var json = {one: 1, two: 2, three: 3};
+      var contexts = '';
+      _.map(json, function(value, key, list){
+        contexts = 'value:'+value+'<br/>'+'key:'+key+'<br/>'+'list:'+list+'<br/>';
+      });
+      contexts += _.map(arr, function(num){ return num * 3; })+'<br/>';
+      contexts += _.map(json, function(num, key){ return num * 3; })+'<br/>';
+      contexts += _.map([[1, 2], [3, 4]], _.first);
+      $("#map_console").html(contexts);
+    });
+    //reduce
+    $("#reduce_btn").on('click', function() {
+      var arr = [1, 2, 3];
+      var contexts = '';
+      _.reduce(arr, function(memo, value, index, list) {
+        contexts += 'memo:'+memo+'<br/>'+'value:'+value+'<br/>'+'index:'+index+'<br/>'+'list:'+list+'<br/>';
+      }, 1);
+      contexts += '<br/>sum:'+_.reduce(arr, function(memo, num){ return memo + num; }, 0)+'<br/><br/>';
+      var result = _.reduce(arr, function(memo, num){
+        contexts += 'memo:'+memo+'<br/>'+'num:'+num+'<br/>';
+        return memo + num;
+      }, 3);
+      contexts += 'result:'+result;
+      $("#reduce_console").html(contexts);
+    });
+    //reduce
+    $("#reduceRight_btn").on('click', function() {
+      var arr = [1, 2, 3];
+      var contexts = '';
+      _.reduceRight(arr, function(memo, value, index, list) {
+        contexts += 'memo:'+memo+'<br/>'+'value:'+value+'<br/>'+'index:'+index+'<br/>'+'list:'+list+'<br/>';
+      }, 1);
+      contexts += '<br/>sum:'+_.reduceRight(arr, function(memo, num){ return memo + num; }, 0);
+      $("#reduceRight_console").html(contexts);
+    });
+  });
+</script>
+</body>
+</html>
