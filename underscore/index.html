@@ -56,6 +56,23 @@
       <li><a href="#view_first" class="cc-active">first</a></li>
       <li><a href="#view_initial" class="cc-active">initial</a></li>
       <li><a href="#view_last" class="cc-active">last</a></li>
+      <li><a href="#view_rest" class="cc-active">rest</a></li>
+      <li><a href="#view_compact" class="cc-active">compact</a></li>
+      <li><a href="#view_flatten" class="cc-active">flatten</a></li>
+      <li><a href="#view_without" class="cc-active">without</a></li>
+      <li><a href="#view_unionl" class="cc-active">union</a></li>
+      <li><a href="#view_intersection" class="cc-active">intersection</a></li>
+      <li><a href="#view_difference" class="cc-active">difference</a></li>
+      <li><a href="#view_uniq" class="cc-active">uniq</a></li>
+      <li><a href="#view_zip" class="cc-active">zip</a></li>
+      <li><a href="#view_unzip" class="cc-active">unzip</a></li>
+      <li><a href="#view_object" class="cc-active">object</a></li>
+      <li><a href="#view_indexOf" class="cc-active">indexOf</a></li>
+      <li><a href="#view_lastIndexOf" class="cc-active">lastIndexOf</a></li>
+      <li><a href="#view_sortedIndex" class="cc-active">sortedIndex</a></li>
+      <li><a href="#view_findIndex" class="cc-active">findIndex</a></li>
+      <li><a href="#view_findLastIndex" class="cc-active">findLastIndex</a></li>
+      <li><a href="#view_range" class="cc-active">range</a></li>
     </ul>
     <div class="docs-content">
       <h2> 介绍（Introduction）</h2>
@@ -351,7 +368,8 @@
         <li>_.invoke(list, methodName, *arguments)</li>
       </ul>
       <p>
-        说明：在<strong>list</strong>的每个元素上执行<strong>methodName</strong>方法。 任何传递给<strong>invoke</strong>的额外参数，<strong>invoke</strong>都会在调用<strong>methodName</strong>方法的时候传递给它。
+        说明：在<strong>list</strong>的每个元素上执行<strong>methodName</strong>方法。
+        任何传递给<strong>invoke</strong>的额外参数，<strong>invoke</strong>都会在调用<strong>methodName</strong>方法的时候传递给它。
       </p>
       <div class="code-panel">
         <pre class="prettyprint">&lt;script&gt;
@@ -438,7 +456,8 @@
         <li>_.groupBy(list, iteratee, [context])</li>
       </ul>
       <p>
-        说明：把一个集合分组为多个集合，通过 <strong>iterator</strong> 返回的结果进行分组. 如果 <strong>iterator</strong> 是一个字符串而不是函数, 那么将使用 <strong>iterator</strong> 作为各元素的属性名来对比进行分组。
+        说明：把一个集合分组为多个集合，通过 <strong>iterator</strong> 返回的结果进行分组。
+         如果 <strong>iterator</strong> 是一个字符串而不是函数, 那么将使用 <strong>iterator</strong> 作为各元素的属性名来对比进行分组。
       </p>
       <div class="code-panel">
         <pre class="prettyprint">&lt;script&gt;
@@ -581,18 +600,363 @@
         <li>_.first(array, [n])</li>
       </ul>
       <p>
-        说明：返回<strong>array</strong>（数组）的第一个元素。传递 <strong>n</strong>参数将返回数组中从第一个元素开始的<strong>n</strong>个元素（注：返回数组中前 <strong>n</strong> 个元素.）。
+        说明：返回<strong>array</strong>（数组）的第一个元素。
+        传递 <strong>n</strong>参数将返回数组中从第一个元素开始的<strong>n</strong>个元素（注：返回数组中前 <strong>n</strong> 个元素.）。
       </p>
       <div class="code-panel">
         <pre class="prettyprint">&lt;script&gt;
-  var result1 =_.first([5, 4, 3, 2, 1]);
+  var result1 = _.first([5, 4, 3, 2, 1]);
   console.log(result1);
 
-  var result2 =_.first([5, 4, 3, 2, 1], 3);
+  var result2 = _.first([5, 4, 3, 2, 1], 3);
   console.log(result2);
 &lt;/script&gt;</pre>
         <button id="first_btn" class="btn btn-position"> 执行</button>
         <pre id="first_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_initial"> initial</h3>
+      <ul>
+        <li>_.initial(array, [n])</li>
+      </ul>
+      <p>
+        说明：返回数组中除了最后一个元素外的其他全部元素。 在<strong>arguments</strong>对象上特别有用。
+        传递 <strong>n</strong>参数将从结果中排除从最后一个开始的<strong>n</strong>个元素（注：排除数组后面的 <strong>n</strong> 个元素）。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result1 = _.initial([5, 4, 3, 2, 1]);
+  console.log(result1);
+
+  var result2 = _.initial([5, 4, 3, 2, 1], 3);
+  console.log(result2);
+&lt;/script&gt;</pre>
+        <button id="initial_btn" class="btn btn-position"> 执行</button>
+        <pre id="initial_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_last"> last</h3>
+      <ul>
+        <li>_.last(array, [n])</li>
+      </ul>
+      <p>
+        说明：返回<strong>array</strong>（数组）的最后一个元素。
+        传递 <strong>n</strong>参数将返回数组中从最后一个元素开始的n个元素（注：返回数组里的后面的<strong>n</strong>个元素）。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result1 = _.last([5, 4, 3, 2, 1]);
+  console.log(result1);
+
+  var result2 = _.last([5, 4, 3, 2, 1], 3);
+  console.log(result2);
+&lt;/script&gt;</pre>
+        <button id="last_btn" class="btn btn-position"> 执行</button>
+        <pre id="last_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_rest"> rest</h3>
+      <ul>
+        <li>_.rest(array, [index]) &nbsp;&nbsp;&nbsp;&nbsp;<i>Alias: <strong>tail, drop</strong></i></li>
+      </ul>
+      <p>
+        说明：返回数组中除了第一个元素外的其他全部元素。传递 <strong>index</strong> 参数将返回从index开始的剩余所有元素 。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result1 = _.rest([5, 4, 3, 2, 1]);
+  console.log(result1);
+
+  var result2 = _.rest([5, 4, 3, 2, 1], 3);
+  console.log(result2);
+&lt;/script&gt;</pre>
+        <button id="rest_btn" class="btn btn-position"> 执行</button>
+        <pre id="rest_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_compact"> compact</h3>
+      <ul>
+        <li>_.compact(array)</li>
+      </ul>
+      <p>
+        说明：返回一个除去所有<strong>false</strong>值的 <strong>array</strong>副本。
+        在<strong>javascript</strong>中, <strong>false, null, 0, "", undefined</strong> 和 <strong>NaN</strong> 都是<strong>false</strong>值。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result = _.compact([0, 1, false, 2, '', 3]);
+  console.log(result);
+&lt;/script&gt;</pre>
+        <button id="compact_btn" class="btn btn-position"> 执行</button>
+        <pre id="compact_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_flatten"> flatten</h3>
+      <ul>
+        <li>_.flatten(array, [shallow])</li>
+      </ul>
+      <p>
+        说明：将一个嵌套多层的数组 <strong>array</strong>（数组） (嵌套可以是任何层数)转换为只有一层的数组。
+        如果你传递 <strong>shallow</strong>参数，数组将只减少一维的嵌套。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result1 = _.flatten([1, [2], [3, [[4]]]]);
+  console.log(result1);
+
+  var result2 = _.flatten([1, [2], [3, [[4]]]], true);
+  console.log(result2);
+&lt;/script&gt;</pre>
+        <button id="flatten_btn" class="btn btn-position"> 执行</button>
+        <pre id="flatten_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_without"> without</h3>
+      <ul>
+        <li>_.without(array, *values)</li>
+      </ul>
+      <p>
+        说明：返回一个删除所有<strong>values</strong>值后的 <strong>array</strong>副本。（注：使用<strong>===</strong>表达式做相等测试）。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result = _.without([1, 2, 1, 0, 3, 1, 4], 0, 1);
+  console.log(result);
+&lt;/script&gt;</pre>
+        <button id="without_btn" class="btn btn-position"> 执行</button>
+        <pre id="without_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_union"> union</h3>
+      <ul>
+        <li>_.union(*arrays)</li>
+      </ul>
+      <p>
+        说明：返回传入的 <strong>arrays</strong>（数组）并集：按顺序返回，返回数组的元素是唯一的，可以传入一个或多个 <strong>arrays</strong>（数组）。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result = _.union([1, 2, 3], [101, 2, 1, 10], [2, 1]);
+  console.log(result);
+&lt;/script&gt;</pre>
+        <button id="union_btn" class="btn btn-position"> 执行</button>
+        <pre id="union_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_intersection"> intersection</h3>
+      <ul>
+        <li>_.intersection(*arrays)</li>
+      </ul>
+      <p>
+        说明：返回传入 <strong>arrays</strong>（数组）交集。结果中的每个值是存在于传入的每个<strong>arrays</strong>（数组）里。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result = _.intersection([1, 2, 3], [101, 2, 1, 10], [2, 1]);
+  console.log(result);
+&lt;/script&gt;</pre>
+        <button id="intersection_btn" class="btn btn-position"> 执行</button>
+        <pre id="intersection_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_difference"> difference</h3>
+      <ul>
+        <li>_.difference(array, *others)</li>
+      </ul>
+      <p>
+        说明：类似于<strong>without</strong>，但返回的值来自<strong>array</strong>参数数组，并且不存在于<strong>other</strong> 数组。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result = _.difference([1, 2, 3, 4, 5], [5, 2, 10]);
+  console.log(result);
+&lt;/script&gt;</pre>
+        <button id="difference_btn" class="btn btn-position"> 执行</button>
+        <pre id="difference_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_uniq"> uniq</h3>
+      <ul>
+        <li>_.uniq(array, [isSorted], [iteratee]) &nbsp;&nbsp;&nbsp;&nbsp;<i>Alias: <strong>unique</strong></i></li>
+      </ul>
+      <p>
+        说明：返回 <strong>array</strong>去重后的副本, 使用 <strong>===</strong> 做相等测试。
+          如果确定 <strong>array</strong> 已经排序, 那么给 <strong>isSorted</strong> 参数传递 <strong>true</strong>值, 此函数将运行的更快的算法。
+          如果要处理对象元素, 传递 <strong>iteratee</strong>函数来获取要对比的属性。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result1 = _.uniq([1, 2, 1, 3, 1, 4]);
+  console.log(result1);
+
+  var result2 = _.uniq([1, 1, 1, 2, 3, 4, 5], true);
+  console.log(result2);
+&lt;/script&gt;</pre>
+        <button id="uniq_btn" class="btn btn-position"> 执行</button>
+        <pre id="uniq_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_zip"> zip</h3>
+      <ul>
+        <li>_.zip(*arrays)</li>
+      </ul>
+      <p>
+        说明：将每个<strong>arrays</strong>中相应位置的值合并在一起。在合并分开保存的数据时很有用。
+        如果你用来处理矩阵嵌套数组时, <strong>_.zip.apply</strong> 可以做类似的效果。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result = _.zip(['moe', 'larry', 'curly'], [30, 40, 50], [true, false, false]);
+  console.log(result);
+&lt;/script&gt;</pre>
+        <button id="zip_btn" class="btn btn-position"> 执行</button>
+        <pre id="zip_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_unzip"> unzip</h3>
+      <ul>
+        <li>_.unzip(arrays)</li>
+      </ul>
+      <p>
+        说明：与<strong>zip</strong>功能相反的函数，给定包含若干<strong>arrays</strong>的数组，返回一串联的新数组，
+        其第一元素个包含所有的输入数组的第一元素，其第二包含了所有的第二元素，依此类推。通过<strong>apply</strong>用于传递数组的数组。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result = _.unzip([['moe', 'larry', 'curly'], [30, 40, 50], [true, false, false]]);
+  console.log(result);
+&lt;/script&gt;</pre>
+        <button id="unzip_btn" class="btn btn-position"> 执行</button>
+        <pre id="unzip_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_object"> object</h3>
+      <ul>
+        <li>_.object(list, [values])</li>
+      </ul>
+      <p>
+        说明：将数组转换为对象。传递任何一个单独<strong>[key, value]</strong>对的列表，或者一个键的列表和一个值得列表。 如果存在重复键，最后一个值将被返回。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result1 = _.object(['moe', 'larry', 'curly'], [30, 40, 50]);
+  console.log(result1);
+
+  var result2 = _.object([['moe', 30], ['larry', 40], ['curly', 50]]);
+  console.log(result2);
+&lt;/script&gt;</pre>
+        <button id="object_btn" class="btn btn-position"> 执行</button>
+        <pre id="object_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_indexOf"> indexOf</h3>
+      <ul>
+        <li>_.indexOf(array, value, [isSorted])</li>
+      </ul>
+      <p>
+        说明：返回<strong>value</strong>在该 <strong>array</strong> 中的索引值，如果<strong>value</strong>不存在 <strong>array</strong>中就返回<strong>-1</strong>。
+        使用原生的<strong>indexOf</strong> 函数，除非它失效。
+        如果您正在使用一个大数组，你知道数组已经排序，传递<strong>true</strong>给<strong>isSorted</strong>将更快的用二进制搜索。
+        或者，传递一个数字作为第三个参数，为了在给定的索引的数组中寻找第一个匹配值。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result1 = _.indexOf([1, 2, 3, 4, 5], 3);
+  console.log(result1);
+
+  var result2 = _.indexOf([1, 2, 3, 4, 5], 3, true);
+  console.log(result2);
+&lt;/script&gt;</pre>
+        <button id="indexOf_btn" class="btn btn-position"> 执行</button>
+        <pre id="indexOf_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_lastIndexOf"> lastIndexOf</h3>
+      <ul>
+        <li>_.lastIndexOf(array, value, [fromIndex])</li>
+      </ul>
+      <p>
+        说明：返回<strong>value</strong>在该 <strong>array</strong> 中的从最后开始的索引值，如果<strong>value</strong>不存在 <strong>array</strong>中就返回<strong>-1</strong>。
+        如果支持原生的<strong>lastIndexOf</strong>，将使用原生的<strong>lastIndexOf</strong>函数。传递<strong>fromIndex</strong>将从你给定的索性值开始搜索。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result1 = _.lastIndexOf([1, 2, 3, 1, 2, 3], 2);
+  console.log(result1);
+
+  var result2 = _.lastIndexOf([1, 2, 3, 1, 2, 3], 2, 3);
+  console.log(result2);
+&lt;/script&gt;</pre>
+        <button id="lastIndexOf_btn" class="btn btn-position"> 执行</button>
+        <pre id="lastIndexOf_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_sortedIndex"> sortedIndex</h3>
+      <ul>
+        <li>_.sortedIndex(list, value, [iteratee], [context])</li>
+      </ul>
+      <p>
+        说明：使用二分查找确定<strong>value</strong>在<strong>list</strong>中的位置序号，<strong>value</strong>按此序号插入能保持<strong>list</strong>原有的排序。
+        如果提供<strong>iterator</strong>函数，<strong>iterator</strong>将作为<strong>list</strong>排序的依据，包括你传递的<strong>value</strong> 。
+        <strong>iterator</strong>也可以是字符串的属性名用来排序(比如<strong>length</strong>)。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result1 = _.sortedIndex([10, 20, 30, 40, 50], 35);
+  console.log(result1);
+
+  var stooges = [{name: 'moe', age: 40}, {name: 'curly', age: 60}];
+  var result2 = _.sortedIndex(stooges, {name: 'larry', age: 50}, 'age');
+  console.log(result2);
+&lt;/script&gt;</pre>
+        <button id="sortedIndex_btn" class="btn btn-position"> 执行</button>
+        <pre id="sortedIndex_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_findIndex"> findIndex</h3>
+      <ul>
+        <li>_.findIndex(array, predicate, [context])</li>
+      </ul>
+      <p>
+        说明：类似于<strong>_.indexOf</strong>，当<strong>predicate</strong>通过真检查时，返回第一个索引值；否则返回<strong>-1</strong>。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  function isPrime(a){
+    for(var j = 2; j < a; j++)
+      if(a%j==0)
+        return false;
+      else
+        return true;
+  }
+  var result1 = _.findIndex([4, 6, 8, 12], isPrime);
+  console.log(result1);
+
+  var result2 = _.findIndex([4, 6, 7, 12], isPrime);
+  console.log(result2);
+&lt;/script&gt;</pre>
+        <button id="findIndex_btn" class="btn btn-position"> 执行</button>
+        <pre id="findIndex_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_findLastIndex"> findLastIndex</h3>
+      <ul>
+        <li>_.findLastIndex(array, predicate, [context])</li>
+      </ul>
+      <p>
+        说明：和<strong>_.findIndex</strong>类似，但反向迭代数组，当<strong>predicate</strong>通过真检查时，最接近末端的索引值将被返回。
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var users = [{'id': 1, 'name': 'Bob', 'last': 'Brown'},
+             {'id': 2, 'name': 'Ted', 'last': 'White'},
+             {'id': 3, 'name': 'Frank', 'last': 'James'},
+             {'id': 4, 'name': 'Ted', 'last': 'Jones'}];
+  var result = _.findLastIndex(users, {name: 'Ted'});
+  console.log(result);
+&lt;/script&gt;</pre>
+        <button id="findLastIndex_btn" class="btn btn-position"> 执行</button>
+        <pre id="findLastIndex_console" class="prettyprint"></pre>
       </div>
     </div>
   </div>
@@ -623,6 +987,7 @@
       });
       $("#each_console").html(contexts);
     });
+
     //map
     $("#map_btn").on('click', function() {
       var arr = [1,2,3];
@@ -636,6 +1001,7 @@
       contexts += _.map([[1, 2], [3, 4]], _.first);
       $("#map_console").html(contexts);
     });
+
     //reduce
     $("#reduce_btn").on('click', function() {
       var arr = [1, 2, 3];
@@ -651,6 +1017,7 @@
       contexts += 'result:'+result;
       $("#reduce_console").html(contexts);
     });
+
     //reduceRight
     $("#reduceRight_btn").on('click', function() {
       var arr = [1, 2, 3];
@@ -661,6 +1028,7 @@
       contexts += '<br/>sum:'+_.reduceRight(arr, function(memo, num){ return memo + num; }, 0);
       $("#reduceRight_console").html(contexts);
     });
+
     //find
     $("#find_btn").on('click', function() {
       var arr = [1, 2, 3];
@@ -671,6 +1039,7 @@
       contexts += '<br/>even:'+_.find([1, 2, 3, 4, 5, 6], function(num){ return num % 2 == 0; });
       $("#find_console").html(contexts);
     });
+
     //filter
     $("#filter_btn").on('click', function() {
       var arr = [1, 2, 3];
@@ -681,6 +1050,7 @@
       contexts += '<br/>even:'+_.filter([1, 2, 3, 4, 5, 6], function(num){ return num % 2 == 0; });
       $("#filter_console").html(contexts);
     });
+
     //where
     $("#where_btn").on('click', function() {
       var contexts = '';
@@ -768,11 +1138,7 @@
     $("#pluck_btn").on('click', function() {
       var stooges = [{name: 'moe', age: 40}, {name: 'larry', age: 50}, {name: 'curly', age: 60}];
       var result = _.pluck(stooges, 'name');
-      var contexts = '[';
-      _.each(result, function(value, key, list){
-        contexts += value+',';
-      });
-      contexts = contexts.substring(0, contexts.length-1)+']';
+      var contexts = '[' + result + ']';
       $("#pluck_console").html(contexts);
     });
 
@@ -884,11 +1250,7 @@
     //shuffle
     $("#shuffle_btn").on('click', function() {
       var result = _.shuffle([1, 2, 3, 4, 5, 6]);
-      var contexts = '[';
-      _.each(result, function(value, key, list){
-        contexts += value+',';
-      });
-      contexts = contexts.substring(0, contexts.length-1)+']';
+      var contexts = '[' + result + ']';
       $("#shuffle_console").html(contexts);
     });
 
@@ -897,28 +1259,16 @@
       var result1 = _.sample([1, 2, 3, 4, 5, 6]);
       var contexts = result1+'<br/>';
       var result2 = _.sample([1, 2, 3, 4, 5, 6], 3);
-      contexts += '[';
-      _.each(result2, function(value, key, list){
-        contexts += value+',';
-      });
-      contexts = contexts.substring(0, contexts.length-1)+']';
+      contexts += '[' + result2 + ']';
       $("#sample_console").html(contexts);
     });
 
     //toArray
     $("#toArray_btn").on('click', function() {
       var result1 = _.toArray({a:0,b:1,c:2});
-      var contexts = '[';
-      _.each(result1, function(value, key, list){
-        contexts += value+',';
-      });
-      contexts = contexts.substring(0, contexts.length-1)+']<br/>';
+      var contexts = '[' + result1 + ']<br/>';
       var result2 = (function(){ return _.toArray(arguments).slice(1); })(1, 2, 3, 4);
-      contexts += '[';
-      _.each(result2, function(value, key, list){
-        contexts += value+',';
-      });
-      contexts = contexts.substring(0, contexts.length-1)+']';
+      contexts += '[' + result2 + ']';
       $("#toArray_console").html(contexts);
     });
 
@@ -947,12 +1297,199 @@
       var result1 = _.first([5, 4, 3, 2, 1]);
       var contexts = result1+'<br/>';
       var result2 = _.first([5, 4, 3, 2, 1], 3);
+      contexts += '[' + result2 + ']';
+      $("#first_console").html(contexts);
+    });
+
+    //initial
+    $("#initial_btn").on('click', function() {
+      var result1 = _.initial([5, 4, 3, 2, 1]);
+      var contexts = '[' + result1 + ']<br/>';
+      var result2 = _.initial([5, 4, 3, 2, 1], 3);
+      contexts += '[' + result2 + ']';
+      $("#initial_console").html(contexts);
+    });
+
+    //last
+    $("#last_btn").on('click', function() {
+      var result1 = _.last([5, 4, 3, 2, 1]);
+      var contexts = '[' + result1 + ']<br/>';
+      var result2 = _.last([5, 4, 3, 2, 1], 3);
+      contexts += '[' + result2 + ']';
+      $("#last_console").html(contexts);
+    });
+
+    //rest
+    $("#rest_btn").on('click', function() {
+      var result1 = _.rest([5, 4, 3, 2, 1]);
+      var contexts = '[' + result1 + ']<br/>';
+      var result2 = _.rest([5, 4, 3, 2, 1], 3);
+      contexts += '[' + result2 + ']';
+      $("#rest_console").html(contexts);
+    });
+
+    //compact
+    $("#compact_btn").on('click', function() {
+      var result = _.compact([0, 1, false, 2, '', 3]);
+      var contexts = '[' + result + ']';
+      $("#compact_console").html(contexts);
+    });
+
+    //flatten
+    $("#flatten_btn").on('click', function() {
+      var result1 = _.flatten([1, [2], [3, [[4]]]]);
+      var contexts = '[' + result1 + ']<br/>';
+      var result2 = _.flatten([1, [2], [3, [[4]]]], true);
       contexts += '[';
       _.each(result2, function(value, key, list){
-        contexts += value+',';
+        if(key == (list.length-1)) {
+          contexts += '[[' + value + ']]';
+        } else {
+          contexts += value+',';
+        }
       });
-      contexts = contexts.substring(0, contexts.length-1)+']';
-      $("#first_console").html(contexts);
+      contexts += ']';
+      $("#flatten_console").html(contexts);
+    });
+
+    //without
+    $("#without_btn").on('click', function() {
+      var result = _.without([1, 2, 1, 0, 3, 1, 4], 0, 1);
+      var contexts = '[' + result + ']';
+      $("#without_console").html(contexts);
+    });
+
+    //union
+    $("#union_btn").on('click', function() {
+      var result = _.union([1, 2, 3], [101, 2, 1, 10], [2, 1]);
+      var contexts = '[' + result + ']';
+      $("#union_console").html(contexts);
+    });
+
+    //intersection
+    $("#intersection_btn").on('click', function() {
+      var result = _.intersection([1, 2, 3], [101, 2, 1, 10], [2, 1]);
+      var contexts = '[' + result + ']';
+      $("#intersection_console").html(contexts);
+    });
+
+    //difference
+    $("#difference_btn").on('click', function() {
+      var result = _.difference([1, 2, 3, 4, 5], [5, 2, 10]);
+      var contexts = '[' + result + ']';
+      $("#difference_console").html(contexts);
+    });
+
+    //uniq
+    $("#uniq_btn").on('click', function() {
+      var result1 = _.uniq([1, 2, 1, 5, 3, 1, 4]);
+      var contexts = '[' + result1 + ']<br/>';
+      var result2 = _.uniq([1, 1, 1, 2, 3, 4, 5], true);
+      contexts += '[' + result2 + ']';
+      $("#uniq_console").html(contexts);
+    });
+
+    //zip
+    $("#zip_btn").on('click', function() {
+      var result = _.zip(['moe', 'larry', 'curly'], [30, 40, 50], [true, false, false]);
+      var contexts = '[';
+      _.each(result, function(value, key, list){
+        contexts += '[';
+        _.each(result[key], function(value, key, list){
+          if(key == 0) {
+            contexts += '\'' + value + '\',';
+          } else {
+            contexts += value + ',';
+          }
+        });
+        contexts = contexts.substring(0, contexts.length-1) + '],';
+      });
+      contexts = contexts.substring(0, contexts.length-1) + ']';
+      $("#zip_console").html(contexts);
+    });
+
+    //unzip
+    $("#unzip_btn").on('click', function() {
+      var result = _.unzip([['moe', 'larry', 'curly'], [30, 40, 50], [true, false, false]]);
+      var contexts = '[';
+      _.each(result, function(value, key, list){
+        contexts += '[';
+        _.each(result[key], function(value, key, list){
+          if(key == 0) {
+            contexts += '\'' + value + '\',';
+          } else {
+            contexts += value + ',';
+          }
+        });
+        contexts = contexts.substring(0, contexts.length-1) + '],';
+      });
+      contexts = contexts.substring(0, contexts.length-1) + ']';
+      $("#unzip_console").html(contexts);
+    });
+
+    //object
+    $("#object_btn").on('click', function() {
+      var result1 = _.object(['moe', 'larry', 'curly'], [30, 40, 50]);
+      var contexts = '{';
+      _.each(result1, function(value, key, list){
+        contexts += key + ':' + value + ',';
+      });
+      contexts = contexts.substring(0, contexts.length-1) + '}<br/>{';
+      var result2 = _.object([['moe', 30], ['larry', 40], ['curly', 50]]);
+      _.each(result2, function(value, key, list){
+        contexts += key + ':' + value + ',';
+      });
+      contexts = contexts.substring(0, contexts.length-1) + '}';
+      $("#object_console").html(contexts);
+    });
+
+    //indexOf
+    $("#indexOf_btn").on('click', function() {
+      var result1 = _.indexOf([1, 2, 3, 4, 5], 3);
+      var contexts = result1 + '<br/>';
+      var result2 = _.indexOf([1, 2, 3, 4, 5], 3, true);
+      contexts += result2;
+      $("#indexOf_console").html(contexts);
+    });
+
+    //lastIndexOf
+    $("#lastIndexOf_btn").on('click', function() {
+      var result1 =  _.lastIndexOf([1, 2, 3, 1, 2, 3], 2);
+      var contexts = result1 + '<br/>';
+      var result2 =  _.lastIndexOf([1, 2, 3, 1, 2, 3], 2, 3);
+      contexts += result2;
+      $("#lastIndexOf_console").html(contexts);
+    });
+
+    //sortedIndex
+    $("#sortedIndex_btn").on('click', function() {
+      var result1 =  _.sortedIndex([10, 20, 30, 40, 50], 35);
+      var contexts = result1 + '<br/>';
+      var stooges = [{name: 'moe', age: 40}, {name: 'curly', age: 60}];
+      var result2 =  _.sortedIndex(stooges, {name: 'larry', age: 50}, 'age');
+      contexts += result2;
+      $("#sortedIndex_console").html(contexts);
+    });
+
+    //findIndex
+    $("#findIndex_btn").on('click', function() {
+      function isPrime(a){for(var j=2;j<a;j++) if(a%j==0) return false; else  return true;}
+      var result1 =  _.findIndex([4, 6, 8, 12], isPrime);
+      var contexts = result1 + '<br/>';
+      var result2 =  _.findIndex([4, 6, 7, 12], isPrime);
+      contexts += result2;
+      $("#findIndex_console").html(contexts);
+    });
+
+    //findLastIndex
+    $("#findLastIndex_btn").on('click', function() {
+      var users = [{'id': 1, 'name': 'Bob', 'last': 'Brown'},
+                   {'id': 2, 'name': 'Ted', 'last': 'White'},
+                   {'id': 3, 'name': 'Frank', 'last': 'James'},
+                   {'id': 4, 'name': 'Ted', 'last': 'Jones'}];
+      var result =  _.findLastIndex(users, {name: 'Ted'});
+      var contexts = result;
+      $("#findLastIndex_console").html(contexts);
     });
   });
 </script>
