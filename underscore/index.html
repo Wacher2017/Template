@@ -73,6 +73,22 @@
       <li><a href="#view_findIndex" class="cc-active">findIndex</a></li>
       <li><a href="#view_findLastIndex" class="cc-active">findLastIndex</a></li>
       <li><a href="#view_range" class="cc-active">range</a></li>
+      <li class="separator"></li>
+      <li><strong>函数(Function)</strong></li>
+      <li><a href="#view_bind" class="cc-active">bind</a></li>
+      <li><a href="#view_bindAll" class="cc-active">bindAll</a></li>
+      <li><a href="#view_partial" class="cc-active">partial</a></li>
+      <li><a href="#view_memoize" class="cc-active">memoize</a></li>
+      <li><a href="#view_delay" class="cc-active">delay</a></li>
+      <li><a href="#view_defer" class="cc-active">defer</a></li>
+      <li><a href="#view_throttle" class="cc-active">throttle</a></li>
+      <li><a href="#view_debounce" class="cc-active">debounce</a></li>
+      <li><a href="#view_once" class="cc-active">once</a></li>
+      <li><a href="#view_after" class="cc-active">after</a></li>
+      <li><a href="#view_before" class="cc-active">before</a></li>
+      <li><a href="#view_wrap" class="cc-active">wrap</a></li>
+      <li><a href="#view_negate" class="cc-active">negate</a></li>
+      <li><a href="#view_compose" class="cc-active">compose</a></li>
     </ul>
     <div class="docs-content">
       <h2> 介绍（Introduction）</h2>
@@ -82,7 +98,7 @@
 	    <p> Underscore提供了100多个函数,包括常用的: map, filter, invoke — 当然还有更多专业的辅助函数,如:函数绑定, JavaScript模板功能,创建快速索引, 强类型相等测试, 等等.</p>
       <p> 这里以Underscore.js (1.8.3)版本的API为参考，进行一些函数实例应用的描述。</p>
       <hr>
-      <h2> 集合(Collection)</h2>
+      <h2> 集合函数 (数组 或对象)</h2>
       <h3 id="view_each"> each</h3>
       <ul>
         <li>_.each(list, iteratee, [context]) &nbsp;&nbsp;&nbsp;&nbsp;<i>Alias: <strong>forEach</strong></i></li>
@@ -594,7 +610,7 @@
       </div>
 
       <hr>
-      <h2> 数组(Array)</h2>
+      <h2> 数组函数（Array Functions）</h2>
       <h3 id="view_first"> first</h3>
       <ul>
         <li>_.first(array, [n])</li>
@@ -957,6 +973,62 @@
 &lt;/script&gt;</pre>
         <button id="findLastIndex_btn" class="btn btn-position"> 执行</button>
         <pre id="findLastIndex_console" class="prettyprint"></pre>
+      </div>
+
+      <h3 id="view_range"> range</h3>
+      <ul>
+        <li>_.range([start], stop, [step])</li>
+      </ul>
+      <p>
+        说明：一个用来创建整数灵活编号的列表的函数，便于<strong>each</strong> 和 <strong>map</strong>循环。
+        如果省略<strong>start</strong>则默认为 <strong>0</strong>；<strong>step</strong> 默认为 <strong>1</strong>.
+        返回一个从<strong>start</strong> 到<strong>stop</strong>的整数的列表，用<strong>step</strong>来增加 （或减少）独占。
+        值得注意的是，如果<strong>stop</strong>值在<strong>start</strong>前面（也就是<strong>stop</strong>值小于<strong>start</strong>值），那么值域会被认为是零长度，而不是负增长。
+        -如果你要一个负数的值域 ，请使用负数<strong>step</strong>.
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var result1 = _.range(10);
+  console.log(result1);
+
+  var result2 = _.range(1, 11);
+  console.log(result2);
+
+  var result3 = _.range(0, 30, 5);
+  console.log(result3);
+
+  var result4 = _.range(0, -10, -1);
+  console.log(result4);
+
+  var result5 = _.range(0);
+  console.log(result5);
+&lt;/script&gt;</pre>
+        <button id="range_btn" class="btn btn-position"> 执行</button>
+        <pre id="range_console" class="prettyprint"></pre>
+      </div>
+
+      <hr>
+      <h2> 与函数有关的函数（Function (uh, ahem) Functions）</h2>
+      <h3 id="view_bind"> bind</h3>
+      <ul>
+        <li>_.bind(function, object, *arguments)</li>
+      </ul>
+      <p>
+        说明：绑定函数 <strong>function</strong> 到对象 <strong>object</strong> 上, 也就是无论何时调用函数, 函数里的 <strong>this</strong> 都指向这个 <strong>object</strong>.
+        任意可选参数 <strong>arguments</strong> 可以传递给函数 <strong>function</strong> , 可以填充函数所需要的参数,这也被称为 <strong>partial application</strong>。
+        对于没有结合上下文的<strong>partial application</strong>绑定，请使用<strong>partial</strong>。
+        (注：<strong>partial application</strong>翻译成“部分应用”或者“偏函数应用”。
+        <strong>partial application</strong>可以被描述为一个函数，它接受一定数目的参数，绑定值到一个或多个这些参数，并返回一个新的函数，这个返回函数只接受剩余未绑定值的参数。)
+      </p>
+      <div class="code-panel">
+        <pre class="prettyprint">&lt;script&gt;
+  var func = function(greeting){ return greeting + ': ' + this.name };
+  func = _.bind(func, {name: 'moe'}, 'hi');
+  var result = func();
+  console.log(result);
+&lt;/script&gt;</pre>
+        <button id="bind_btn" class="btn btn-position"> 执行</button>
+        <pre id="bind_console" class="prettyprint"></pre>
       </div>
     </div>
   </div>
@@ -1490,6 +1562,30 @@
       var result =  _.findLastIndex(users, {name: 'Ted'});
       var contexts = result;
       $("#findLastIndex_console").html(contexts);
+    });
+
+    //range
+    $("#range_btn").on('click', function() {
+      var result1 =  _.range(10);
+      var contexts = '[' + result1 + ']<br/>';
+      var result2 =  _.range(1, 11);
+       contexts += '[' + result2 + ']<br/>';
+      var result3 =  _.range(0, 30, 5);
+      contexts += '[' + result3 + ']<br/>';
+      var result4 =  _.range(0, -10, -1);
+      contexts += '[' + result4 + ']<br/>';
+      var result5 =  _.range(0);
+      contexts += '[' + result5 + ']';
+      $("#range_console").html(contexts);
+    });
+
+    //bind
+    $("#bind_btn").on('click', function() {
+      var func = function(greeting){ return greeting + ': ' + this.name };
+      func = _.bind(func, {name: 'moe'}, 'hi');
+      var result =  func();
+      var contexts = result;
+      $("#bind_console").html(contexts);
     });
   });
 </script>
